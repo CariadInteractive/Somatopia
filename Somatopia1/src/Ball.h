@@ -14,7 +14,7 @@
 class Ball
 {
 public:
-    
+    void setCol(ofColor newCol);
     void display();
     void update();
     void checkEdges();
@@ -30,9 +30,11 @@ private:
     int rad;
     int mass;
     
-    ofColor color;
+    ofColor col;
     
     bool inside;
+    int soundTimer;
+    int MIN_TIME_BETWEEN_BEEPS;
 };
 
 

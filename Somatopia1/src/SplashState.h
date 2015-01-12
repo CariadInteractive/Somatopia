@@ -21,14 +21,14 @@ public:
     string getName();
     
 private:
-    int offSet = ofGetWidth()/100;
-    int buttonWidth = ofGetWidth()/2 - offSet*2;
-    int buttonHeight = ofGetHeight()/4 - offSet*2;
+    int offSet;
+    int buttonWidth;
+    int buttonHeight;
     
     
-    StateButton flow = StateButton(offSet, (int)ofGetHeight()/2 - offSet, buttonWidth, buttonHeight, "flow");
-    StateButton cr = StateButton((int)ofGetWidth()/2, (int)ofGetHeight()/2 - offSet, buttonWidth, buttonHeight, "cr");
-    StateButton rhythm = StateButton(offSet, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "rhythm");
-    StateButton space = StateButton((int)ofGetWidth()/2, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "space");
-    StateButton options = StateButton(offSet, offSet, buttonWidth/2, buttonHeight/2, "options");
+    StateButton flow;
+    StateButton cr;
+    StateButton rhythm;
+    StateButton space;
+    StateButton options;
 };

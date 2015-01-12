@@ -16,6 +16,7 @@ public:
     void display();
     bool isInside(float x, float y);
     StateButton(int x, int y, int w, int h, string link);
+    StateButton();
     int getX();
     int getY();
     int getW();

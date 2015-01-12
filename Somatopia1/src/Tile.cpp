@@ -16,14 +16,20 @@ Tile::Tile(int x, int y, int w, int h) :
     h (h)
 {
     inside = false;
-    inCol = ofColor::red;
-    outCol = ofColor::blue;
+    inCol = ofColor(0);
+    outCol = ofColor(255);
     vidOn = false;
     closing = false;
     opening = false;
+    flipSpeed = 20;
 }
 
-void Tile::update(ofxCv::ContourFinder contourFinder) {
+void Tile::setCols(ofColor newInCol, ofColor newOutCol) {
+    inCol = inColMem = newInCol;
+    outCol = newOutCol;
+}
+
+void Tile::update() {
     if(inside) {
         closing = true;
         opening = false;
@@ -34,13 +40,14 @@ void Tile::update(ofxCv::ContourFinder contourFinder) {
     }
     
     if(closing) {
-        w -= 10;
+        w -= flipSpeed;
         w = max(w, -fullWidth);
     }
     if(opening) {
-        w += 10;
+        w += flipSpeed;
         w = min(w, fullWidth);
     }
+    inside = false;
 }
 
 void Tile::display() {
@@ -60,13 +67,12 @@ void Tile::display() {
 
 void Tile::checkContour(ofPolyline contour) {
     if(contour.inside(ofMap(x, 0, ofGetWidth(), 0, 320), ofMap(y, 0, ofGetHeight(), 0, 240))) inside = true;
-    else inside = false;
 }
 
 void Tile::toggleVid() {
     vidOn = !vidOn;
     if(vidOn) inCol = ofColor(0, 0, 0, 0);
-    else inCol = ofColor::red;
+    else inCol = inColMem;
 }
 
 bool Tile::vidIsOn() {

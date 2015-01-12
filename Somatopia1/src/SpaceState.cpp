@@ -19,12 +19,12 @@ void SpaceState::setup()
     tiles = vector<Tile>();
     int w = ofGetWidth() / NUMCOLS;
     int h = ofGetHeight() / NUMROWS;
-    
-    for(int i = 0; i < NUMROWS; i++)
-    {
-        for(int j = 0; j < NUMCOLS; j++)
-        {
+    int k = 0;
+    for(int i = 0; i < NUMROWS; i++) {
+        for(int j = 0; j < NUMCOLS; j++) {
             tiles.push_back(Tile(j*w+w/2, i*h+h/2, w, h));
+            tiles[k].setCols(getSharedData().pallete[0], getSharedData().pallete[4]);
+            k++;
         }
     }
 }
@@ -35,9 +35,10 @@ void SpaceState::update()
     
     if(getSharedData().cam.isFrameNew()) {
         
-        getSharedData().colorImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240);
-        
-        getSharedData().grayImage = getSharedData().colorImg;
+        getSharedData().colImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240);
+        getSharedData().colImg.mirror(false, true);
+
+        getSharedData().grayImage = getSharedData().colImg;
         if(getSharedData().bLearnBackground) {
             getSharedData().grayBg = getSharedData().grayImage;
             getSharedData().bLearnBackground = false;
@@ -47,28 +48,30 @@ void SpaceState::update()
         getSharedData().grayDiff.threshold(getSharedData().threshold);
         
         getSharedData().contourFinder.findContours(getSharedData().grayDiff);
-    }
-    
-    int n = getSharedData().contourFinder.size();
-    for(int i = 0; i < n; i++) {
-        ofPolyline convexHull;
-        convexHull = ofxCv::toOf(getSharedData().contourFinder.getConvexHull(i));
-        for(int j = 0; j < tiles.size(); j++) {
-            tiles[j].checkContour(convexHull);
-            tiles[j].update(getSharedData().contourFinder);
+        
+//        getSharedData().findContoursMat();
+        int n = getSharedData().contourFinder.size();
+        for(int i = 0; i < n; i++) {
+            ofPolyline convexHull;
+            convexHull = ofxCv::toOf(getSharedData().contourFinder.getConvexHull(i));
+            for(int j = 0; j < tiles.size(); j++) {
+                tiles[j].checkContour(convexHull);
+            }
+        }
+        for(int i = 0; i < tiles.size(); i++)
+        {
+            tiles[i].update();
         }
     }
 }
 
 void SpaceState::draw()
 {
-
     ofSetColor(255);
     if(tiles[0].vidIsOn())
     {
-        getSharedData().cam.draw(0, 0, ofGetWidth(), ofGetHeight());
+        getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight());
     }
-    ofDrawBitmapString("Space is currently under development: press 's' to return the splash page",  0, 10);
     for(int i = 0; i < tiles.size(); i++) {
         tiles[i].display();
     }

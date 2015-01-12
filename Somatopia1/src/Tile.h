@@ -14,9 +14,9 @@
 class Tile
 {
 public:
-    
+    void setCols(ofColor newInCol, ofColor newOutCol);
     void display();
-    void update(ofxCv::ContourFinder);
+    void update();
     void checkContour(ofPolyline countour);
     void toggleVid();
     bool vidIsOn();
@@ -27,6 +27,7 @@ private:
     
     bool vidOn;
     int x, y, w, h, fullWidth;
-    ofColor inCol, outCol;
+    ofColor inCol, outCol, inColMem;
     bool inside, closing, opening;
+    float flipSpeed;
 };

@@ -21,6 +21,7 @@
 		1AD5E66A1A5B503C004CBB4A /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD5E6681A5B503C004CBB4A /* Ball.cpp */; };
 		1AD5E6701A5C08CB004CBB4A /* SharedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD5E66F1A5C08CB004CBB4A /* SharedData.cpp */; };
 		1AD5E6731A5C10BF004CBB4A /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD5E6711A5C10BF004CBB4A /* Tile.cpp */; };
+		1AD5E6791A5D4066004CBB4A /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD5E6771A5D4066004CBB4A /* Particle.cpp */; };
 		1D5F3298C2FA073628012944 /* ofxCvContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76DE5C29BDBD2CAA1DD0021 /* ofxCvContourFinder.cpp */; };
 		2023EF517ED2D8B397511D4B /* Helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9076967F8C54A04362C04AA /* Helpers.cpp */; };
 		250A95BA26587BE85DB0A353 /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE9C7160245B19131DAE6128 /* ofxCvColorImage.cpp */; };
@@ -123,6 +124,8 @@
 		1AD5E66F1A5C08CB004CBB4A /* SharedData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SharedData.cpp; sourceTree = "<group>"; };
 		1AD5E6711A5C10BF004CBB4A /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tile.cpp; sourceTree = "<group>"; };
 		1AD5E6721A5C10BF004CBB4A /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
+		1AD5E6771A5D4066004CBB4A /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
+		1AD5E6781A5D4066004CBB4A /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		1E95EFD35ED9C5D97F2F015E /* timer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = timer.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/timer.h; sourceTree = SOURCE_ROOT; };
 		2E411F99E3AB7154484B4F96 /* kmeans_index.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = kmeans_index.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/kmeans_index.h; sourceTree = SOURCE_ROOT; };
 		30884ECD9C171AB1B1BDFC3F /* cv.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cv.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.hpp; sourceTree = SOURCE_ROOT; };
@@ -757,6 +760,8 @@
 				1AD5E6691A5B503C004CBB4A /* Ball.h */,
 				1AD5E6711A5C10BF004CBB4A /* Tile.cpp */,
 				1AD5E6721A5C10BF004CBB4A /* Tile.h */,
+				1AD5E6771A5D4066004CBB4A /* Particle.cpp */,
+				1AD5E6781A5D4066004CBB4A /* Particle.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -878,6 +883,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				250A95BA26587BE85DB0A353 /* ofxCvColorImage.cpp in Sources */,
+				1AD5E6791A5D4066004CBB4A /* Particle.cpp in Sources */,
 				1D5F3298C2FA073628012944 /* ofxCvContourFinder.cpp in Sources */,
 				1A604BB01A5B13EE00FB1665 /* SpaceState.cpp in Sources */,
 				169D3C72FDE6C5590A1616F5 /* ofxCvFloatImage.cpp in Sources */,

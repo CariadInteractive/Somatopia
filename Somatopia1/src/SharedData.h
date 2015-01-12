@@ -41,12 +41,20 @@ public:
     ofVideoGrabber cam;
     
     ofxCv::ContourFinder contourFinder;
-    ofxCvColorImage	colorImg;
+    ofxCvColorImage	colImg;
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;
     ofxCvGrayscaleImage grayDiff;
     
+    //    ofImage colImg;
+    //    ofImage greyImg;
+    //    ofImage greyBgImg;
+    //    ofImage greyDiffImg;
+
+    
     ofSoundPlayer noise;
+    
+//    cv::Mat frame, greyFrame, greyBg, greyDiff;
     
     float threshold;
     
@@ -59,4 +67,8 @@ public:
     void handleDebug(int key);
     void handleBackground(int key);
     void handleThreshold(int key);
+//    void findContoursMat();
+    
+    ofColor pallete[7];
+    ofColor background;
 };

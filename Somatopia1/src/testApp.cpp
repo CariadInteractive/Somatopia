@@ -1,16 +1,27 @@
 #include "testApp.h"
 
-using namespace ofxCv;
-using namespace cv;
-
 //--------------------------------------------------------------
 void testApp::setup(){
     // setup shared data
-
-    stateMachine.getSharedData().colorImg.allocate(320,240);
+    
+    stateMachine.getSharedData().colImg.allocate(320,240);
     stateMachine.getSharedData().grayImage.allocate(320,240);
     stateMachine.getSharedData().grayBg.allocate(320,240);
     stateMachine.getSharedData().grayDiff.allocate(320,240);
+//    stateMachine.getSharedData().colImg.allocate(320, 240, OF_IMAGE_COLOR);
+//    stateMachine.getSharedData().greyImg.allocate(320, 240, OF_IMAGE_GRAYSCALE);
+//    stateMachine.getSharedData().greyBgImg.allocate(320, 240, OF_IMAGE_GRAYSCALE);
+//    stateMachine.getSharedData().greyDiffImg.allocate(320, 240, OF_IMAGE_GRAYSCALE);
+    
+    stateMachine.getSharedData().pallete[0] = ofColor(232, 135, 57); //orange
+    stateMachine.getSharedData().pallete[1] = ofColor(214, 38, 49); //red
+    stateMachine.getSharedData().pallete[2] = ofColor(255, 213, 0); //yellow
+    stateMachine.getSharedData().pallete[3] = ofColor(195, 229, 239); //lightBlue
+    stateMachine.getSharedData().pallete[4] = ofColor(170, 203, 93); //green
+    stateMachine.getSharedData().pallete[5] = ofColor(0, 122, 195); //darkBlue
+    stateMachine.getSharedData().pallete[6] = ofColor(177, 84, 194); //purple
+    
+    stateMachine.getSharedData().background = stateMachine.getSharedData().pallete[3];
     
     stateMachine.getSharedData().bDebugOn = false;
     stateMachine.getSharedData().bLearnBackground = true;
@@ -25,7 +36,7 @@ void testApp::setup(){
     stateMachine.getSharedData().contourFinder.setMaxAreaRadius(150);
     stateMachine.getSharedData().contourFinder.setInvert(false);
     
-    ofBackground(195, 229, 239);
+    ofBackground(stateMachine.getSharedData().background);
     
     // initialise state machine
     stateMachine.addState<SplashState>();

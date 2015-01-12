@@ -10,6 +10,16 @@
 
 void SplashState::setup()
 {
+    offSet = ofGetWidth()/100;
+    buttonWidth = ofGetWidth()/2 - offSet*2;
+    buttonHeight = ofGetHeight()/4 - offSet*2;
+    
+    flow = StateButton(offSet, (int)ofGetHeight()/2 - offSet, buttonWidth, buttonHeight, "flow");
+    cr = StateButton((int)ofGetWidth()/2, (int)ofGetHeight()/2 - offSet, buttonWidth, buttonHeight, "cr");
+    rhythm = StateButton(offSet, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "rhythm");
+    space = StateButton((int)ofGetWidth()/2, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "space");
+    options = StateButton(offSet, offSet, buttonWidth/2, buttonHeight/2, "options");
+    
     flow.setImage("flowSplash.png");
     cr.setImage("crSplash.png");
     rhythm.setImage("rhythmSplash.png");

@@ -13,6 +13,7 @@ using namespace cv;
 
 void RhythmState::setup() {
     getSharedData().noise.loadSound("pongSound.ogg");
+    ball.setCol(getSharedData().pallete[1]);
 }
 
 void RhythmState::update() {
@@ -20,12 +21,13 @@ void RhythmState::update() {
     ball.checkEdges();
     
     getSharedData().cam.update();
-    
     if(getSharedData().cam.isFrameNew()) {
-        
-        getSharedData().colorImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240);
-        
-        getSharedData().grayImage = getSharedData().colorImg;
+        getSharedData().colImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240);
+    }
+    if(getSharedData().cam.isFrameNew()) {
+        getSharedData().colImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240);
+        getSharedData().colImg.mirror(false, true);
+        getSharedData().grayImage = getSharedData().colImg;
         if(getSharedData().bLearnBackground) {
             getSharedData().grayBg = getSharedData().grayImage;
             getSharedData().bLearnBackground = false;
@@ -33,10 +35,11 @@ void RhythmState::update() {
         
         getSharedData().grayDiff.absDiff(getSharedData().grayBg, getSharedData().grayImage);
         getSharedData().grayDiff.threshold(getSharedData().threshold);
-        
+       getSharedData().contourFinder.findContours(getSharedData().grayDiff);
         getSharedData().contourFinder.findContours(getSharedData().grayDiff);
     }
-    
+//    getSharedData().findContoursMat();
+
     int n = getSharedData().contourFinder.size();
     for(int i = 0; i < n; i++)
     {
@@ -50,7 +53,7 @@ void RhythmState::draw()
 {
 //    ofDrawBitmapString("Rhythm is currently under development: press 's' to return the splash page",  0, 10);
     ofSetColor(255);
-    getSharedData().cam.draw(0, 0, ofGetWidth(), ofGetHeight());
+    getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight());
     
     ball.display();
     
