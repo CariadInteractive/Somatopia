@@ -7,18 +7,17 @@
 //
 
 #include "FlowState.h"
-#define NUMPARTICLES 1000
 
 using namespace ofxCv;
 using namespace cv;
 
 void FlowState::setup() {
+    getSharedData().numFlowParticles = 1000;
     ofSetVerticalSync(true);
-    for(int i = 0; i < NUMPARTICLES; i++) {
-        particles.push_back(Particle(ofRandom(ofGetWidth()), ofMap(i, 0, NUMPARTICLES, 10, ofGetHeight()-10)));
+    for(int i = 0; i < getSharedData().numFlowParticles; i++) {
+        particles.push_back(Particle(ofRandom(ofGetWidth()), ofMap(i, 0, getSharedData().numFlowParticles, 10, ofGetHeight()-10)));
         particles[i].setCol(getSharedData().pallete[6]);
     }
-    vidOn = true;
 }
 
 void FlowState::update() {
@@ -46,7 +45,7 @@ void FlowState::draw()
 {
 //    ofDrawBitmapString("Flow is currently under development: press 's' to return the splash page",  0, 10);
     ofSetColor(255);
-    if(!vidOn) getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight());
+    if(!getSharedData().bVidOn) getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetColor(getSharedData().background, 20);
     ofRect(0, 0, ofGetWidth(), ofGetHeight());
     ofSetColor(getSharedData().pallete[0]);
@@ -72,6 +71,6 @@ void FlowState::keyPressed(int key)
     }
     if(key == 'v')
     {
-        vidOn = !vidOn;
+        getSharedData().bVidOn = !getSharedData().bVidOn;
     }
 }

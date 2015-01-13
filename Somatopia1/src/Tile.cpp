@@ -69,8 +69,14 @@ void Tile::checkContour(ofPolyline contour) {
     if(contour.inside(ofMap(x, 0, ofGetWidth(), 0, 320), ofMap(y, 0, ofGetHeight(), 0, 240))) inside = true;
 }
 
-void Tile::toggleVid() {
-    vidOn = !vidOn;
+void Tile::activateVid() {
+    vidOn = true;
+    if(vidOn) inCol = ofColor(0, 0, 0, 0);
+    else inCol = inColMem;
+}
+
+void Tile::deactivateVid() {
+    vidOn = false;
     if(vidOn) inCol = ofColor(0, 0, 0, 0);
     else inCol = inColMem;
 }

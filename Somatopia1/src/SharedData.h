@@ -60,8 +60,9 @@ public:
     
     bool bLearnBackground;
     bool bDebugOn;
+    bool bVidOn;
     
-    int timer;
+    int numFlowParticles;
     
     void drawDebug();
     void handleDebug(int key);

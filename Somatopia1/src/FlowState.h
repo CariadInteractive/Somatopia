@@ -23,5 +23,4 @@ public:
 private:
     ofxCv::FlowFarneback farneback;
     vector<Particle> particles;
-    bool vidOn;
 };

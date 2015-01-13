@@ -31,6 +31,20 @@ void SpaceState::setup()
 
 void SpaceState::update()
 {
+    if(getSharedData().bVidOn) {
+        if(!tiles[0].vidIsOn()) {
+            for(int i = 0; i < tiles.size(); i++) {
+                tiles[i].activateVid();
+            }
+        }
+    }
+    else {
+        if(tiles[0].vidIsOn()) {
+            for(int i = 0; i < tiles.size(); i++) {
+                tiles[i].deactivateVid();
+            }
+        }
+    }
     getSharedData().cam.update();
     
     if(getSharedData().cam.isFrameNew()) {
@@ -95,9 +109,7 @@ void SpaceState::keyPressed(int key)
         changeState("splash");
     }
     if(key == 'v') {
-        for(int i = 0; i < tiles.size(); i++) {
-            tiles[i].toggleVid();
-        }
+        getSharedData().bVidOn = !getSharedData().bVidOn;
     }
     getSharedData().handleDebug(key);
     getSharedData().handleBackground(key);

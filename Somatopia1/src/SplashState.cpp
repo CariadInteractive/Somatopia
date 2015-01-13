@@ -27,8 +27,7 @@ void SplashState::setup()
     options.setImage("optionsSplash.png");
 }
 
-void SplashState::update()
-{
+void SplashState::update() {
     
 }
 

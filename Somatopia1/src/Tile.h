@@ -18,7 +18,9 @@ public:
     void display();
     void update();
     void checkContour(ofPolyline countour);
-    void toggleVid();
+    void activateVid();
+    void deactivateVid();
+
     bool vidIsOn();
     
     Tile(int x, int y, int w, int h);

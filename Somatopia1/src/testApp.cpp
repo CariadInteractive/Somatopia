@@ -3,7 +3,8 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     // setup shared data
-    
+    stateMachine.enableKeyEvents();
+    stateMachine.enableMouseEvents();
     stateMachine.getSharedData().colImg.allocate(320,240);
     stateMachine.getSharedData().grayImage.allocate(320,240);
     stateMachine.getSharedData().grayBg.allocate(320,240);
@@ -81,6 +82,7 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
+    cout<<"Mouse Pressed in Test App"<<endl;
     
 }
 

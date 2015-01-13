@@ -28,7 +28,13 @@ void StateButton::display()
 {
     ofSetColor(255);
     ofFill();
-    img.draw(x, y, w, h);
+    if(imgLoaded) img.draw(x, y, w, h);
+    else {
+        ofPushStyle();
+        ofSetColor(col);
+        ofRect(x, y, w, h);
+        ofPopStyle();
+    }
 }
 
 bool StateButton::isInside(float xVal, float yVal)
@@ -64,7 +70,11 @@ string StateButton::getLink()
 
 void StateButton::setImage(string imageLink)
 {
-    img.loadImage(imageLink);
+    imgLoaded = img.loadImage(imageLink);
+}
+
+void StateButton::setCol(ofColor newCol) {
+    col = newCol;
 }
 
 

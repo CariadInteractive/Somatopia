@@ -23,10 +23,13 @@ public:
     int getH();
     string getLink();
     void setImage(string imageLink);
+    void setCol(ofColor newCol);
 private:
     int x, y, w, h;
     string link;
     ofImage img;
+    ofColor(col);
+    bool imgLoaded;
 };
 
 
