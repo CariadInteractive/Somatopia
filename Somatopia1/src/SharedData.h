@@ -40,36 +40,29 @@ public:
     ofTrueTypeFont futura;
     ofVideoGrabber cam;
     
-    ofxCv::ContourFinder contourFinder;
+    ofxCv::ContourFinder contourFinder; //contourFinder
+    /* ofxOpenCv objects for handling backgorund subtraction (replace with cv::Mats to use only ofxCv */
     ofxCvColorImage	colImg;
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;
     ofxCvGrayscaleImage grayDiff;
     
-    //    ofImage colImg;
-    //    ofImage greyImg;
-    //    ofImage greyBgImg;
-    //    ofImage greyDiffImg;
-
+    ofSoundPlayer noise; //sound to be played
     
-    ofSoundPlayer noise;
+    float threshold; //threshold for background subtraction
     
-//    cv::Mat frame, greyFrame, greyBg, greyDiff;
+    bool bLearnBackground; //bool for learning background
+    bool bDebugOn; //bool for drawing debug
+    bool bVidOn; //bool for global video activation
     
-    float threshold;
+    int numFlowParticles; //number of particles on flow app
     
-    bool bLearnBackground;
-    bool bDebugOn;
-    bool bVidOn;
-    
-    int numFlowParticles;
-    
-    void drawDebug();
+    void drawDebug(); //draw debug function
+    /* functions to control global variables */
     void handleDebug(int key);
     void handleBackground(int key);
     void handleThreshold(int key);
-//    void findContoursMat();
     
-    ofColor pallete[7];
-    ofColor background;
+    ofColor pallete[7]; //color pallete in array
+    ofColor background; //background color (keeping track of it here
 };

@@ -3,17 +3,17 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     // setup shared data
+    //enable mouse a keyboard interaction (usually on by default)
     stateMachine.enableKeyEvents();
     stateMachine.enableMouseEvents();
+    
+    //Allocate space for our images
     stateMachine.getSharedData().colImg.allocate(320,240);
     stateMachine.getSharedData().grayImage.allocate(320,240);
     stateMachine.getSharedData().grayBg.allocate(320,240);
     stateMachine.getSharedData().grayDiff.allocate(320,240);
-//    stateMachine.getSharedData().colImg.allocate(320, 240, OF_IMAGE_COLOR);
-//    stateMachine.getSharedData().greyImg.allocate(320, 240, OF_IMAGE_GRAYSCALE);
-//    stateMachine.getSharedData().greyBgImg.allocate(320, 240, OF_IMAGE_GRAYSCALE);
-//    stateMachine.getSharedData().greyDiffImg.allocate(320, 240, OF_IMAGE_GRAYSCALE);
     
+    //input our color pallete for the project
     stateMachine.getSharedData().pallete[0] = ofColor(232, 135, 57); //orange
     stateMachine.getSharedData().pallete[1] = ofColor(214, 38, 49); //red
     stateMachine.getSharedData().pallete[2] = ofColor(255, 213, 0); //yellow
@@ -22,21 +22,30 @@ void testApp::setup(){
     stateMachine.getSharedData().pallete[5] = ofColor(0, 122, 195); //darkBlue
     stateMachine.getSharedData().pallete[6] = ofColor(177, 84, 194); //purple
     
+    //save the 4th color as the background color for reference later
     stateMachine.getSharedData().background = stateMachine.getSharedData().pallete[3];
     
+    //turn off debug mode
     stateMachine.getSharedData().bDebugOn = false;
+    
+    //turn background learning on so the first frame the app recieves will be set as the background image
     stateMachine.getSharedData().bLearnBackground = true;
     
+    //set the threshold for blob tracking
     stateMachine.getSharedData().threshold = 20.0f;
-        
+    
+    //load font futura
     stateMachine.getSharedData().futura.loadFont("Futura.ttc", 32);
     
+    //initialize our webcam
     stateMachine.getSharedData().cam.initGrabber(320, 240);
     
+    //initialize our blob finder
     stateMachine.getSharedData().contourFinder.setMinAreaRadius(10);
     stateMachine.getSharedData().contourFinder.setMaxAreaRadius(150);
     stateMachine.getSharedData().contourFinder.setInvert(false);
     
+    //set the background to our background
     ofBackground(stateMachine.getSharedData().background);
     
     // initialise state machine
@@ -47,6 +56,7 @@ void testApp::setup(){
     stateMachine.addState<SpaceState>();
     stateMachine.addState<RhythmState>();
     
+    //set first state
     stateMachine.changeState("splash");
 }
 

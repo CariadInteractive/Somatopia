@@ -21,11 +21,11 @@ public:
     string getName();
     
 private:
-    int offSet;
-    int buttonWidth;
-    int buttonHeight;
+    int offSet; //offset value for button spacing
+    int buttonWidth; //width of each state Button (not options)
+    int buttonHeight; //height of the State Button (not options)
     
-    
+    /*state buttons*/
     StateButton flow;
     StateButton cr;
     StateButton rhythm;

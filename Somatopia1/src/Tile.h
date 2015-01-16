@@ -27,9 +27,9 @@ public:
     
 private:
     
-    bool vidOn;
-    int x, y, w, h, fullWidth;
-    ofColor inCol, outCol, inColMem;
+    bool vidOn; //bool to check if video is on (NOT DEPRECATED! STILL NEEDED!)
+    int x, y, w, h, fullWidth; //location and size of tile, fullWidth saves the maximum width for flipping purposes
+    ofColor inCol, outCol, inColMem; //inside and outside colors (save inside color for 
     bool inside, closing, opening;
     float flipSpeed;
 };

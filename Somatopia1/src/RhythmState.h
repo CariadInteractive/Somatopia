@@ -23,6 +23,6 @@ public:
     void mouseMoved(int x, int y );
     string getName();
 private:
-    Ball ball;
-    int mouseX, mouseY;
+    Ball ball; //ball the bounces around
+    int mouseX, mouseY; //mouse location (deprecated?)
 };

@@ -25,11 +25,11 @@ public:
     void setImage(string imageLink);
     void setCol(ofColor newCol);
 private:
-    int x, y, w, h;
-    string link;
-    ofImage img;
-    ofColor(col);
-    bool imgLoaded;
+    int x, y, w, h; //location and size of button
+    string link; //name of the state that this links to
+    ofImage img; //image to be displayed (optional)
+    ofColor(col); //color to be displayed (overwritten by image)
+    bool imgLoaded; //bool to chekc if hte image has loaded
 };
 
 

@@ -28,5 +28,5 @@ public:
     void gotMessage(ofMessage msg);
     
 private:
-    itg::ofxStateMachine<SharedData> stateMachine;
+    itg::ofxStateMachine<SharedData> stateMachine; //stateMachine that runs everything
 };

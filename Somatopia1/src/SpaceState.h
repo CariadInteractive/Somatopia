@@ -21,5 +21,5 @@ public:
     string getName();
     
 private:
-    vector<Tile> tiles;
+    vector<Tile> tiles; //vector of tiles covering screen
 };

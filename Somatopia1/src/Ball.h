@@ -22,19 +22,19 @@ public:
     Ball();
     
 private:
-    ofVec2f loc;
-    ofVec2f vel;
-    ofVec2f acc;
+    ofVec2f loc; //location of Ball
+    ofVec2f vel; //velocity of Ball
+    ofVec2f acc; //Acceleration of Ball
     
-    ofSoundPlayer sound;
-    int rad;
-    int mass;
+    ofSoundPlayer sound; //sound that the ball plays
+    int rad; //radius of the ball
+    int mass; //mass of the ball (not actually used, could be used for some physics)
     
-    ofColor col;
+    ofColor col; //color of the ball
     
-    bool inside;
-    int soundTimer;
-    int MIN_TIME_BETWEEN_BEEPS;
+    bool inside; //check if the ball is inside any polyLines
+    int soundTimer; //timer to keep sound from pinging too much
+    int MIN_TIME_BETWEEN_BEEPS; //min time between each sound being played
 };
 
 

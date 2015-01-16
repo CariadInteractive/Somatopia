@@ -10,23 +10,23 @@
 
 Ball::Ball()
 {
-    inside = false;
-    loc.set(ofGetWidth()/2, ofGetHeight()/2);
-    vel.set(10, -5);
-    acc.set(0, 0);
-    rad = 100;
-    col = ofColor(0);
-    sound.loadSound("pongSound.ogg");
-    soundTimer = 0;
-    MIN_TIME_BETWEEN_BEEPS = 10;
+    inside = false; //keep track of whether the ball is inside a blob
+    loc.set(ofGetWidth()/2, ofGetHeight()/2); //initialize location to center of the screen
+    vel.set(10, -5); //set the initial velocity
+    acc.set(0, 0); //set the initial acceleration
+    rad = 100; //set the radiu of the ball
+    col = ofColor(0); //set the color of the ball
+    sound.loadSound("pongSound.ogg"); //set hte sound that the ball will make whne it hits a wall
+    soundTimer = 0; //counter for how long it's been before hte ball makes a sound again
+    MIN_TIME_BETWEEN_BEEPS = 10; //minimum time between sounds
 }
 
-void Ball::setCol(ofColor newCol)
+void Ball::setCol(ofColor newCol) //set color function
 {
     col = newCol;
 }
 
-void Ball::display()
+void Ball::display() //draw the ball
 {
     ofPushStyle();
     ofSetColor(col);
@@ -35,7 +35,7 @@ void Ball::display()
     ofPopStyle();
 }
 
-void Ball::update()
+void Ball::update() //update the balls location and increment the sound timer
 {
     vel += acc;
     loc += vel;
@@ -43,7 +43,7 @@ void Ball::update()
     inside = false;
 }
 
-void Ball::checkEdges()
+void Ball::checkEdges() //bounce off of edges and play sound whenever it hits an edge
 {
     if (loc.y > ofGetWindowHeight() - rad)
     {
@@ -83,17 +83,19 @@ void Ball::checkEdges()
     }
 }
 
-void Ball::checkContour(ofPolyline contour)
+void Ball::checkContour(ofPolyline contour) //bounce off of ofPolyLine objects
 {
-    if (contour.inside(ofMap(loc.x, 0, ofGetWidth(), 0, 320), ofMap(loc.y, 0, ofGetHeight(), 0, 240))) {
-        if(!sound.getIsPlaying() && soundTimer > MIN_TIME_BETWEEN_BEEPS) {
-            sound.play();
-            soundTimer = 0;
+    if (contour.inside(ofMap(loc.x, 0, ofGetWidth(), 0, 320), ofMap(loc.y, 0, ofGetHeight(), 0, 240))) //check if the ball is inside an ofPolyLine
+    {
+        if(!sound.getIsPlaying() && soundTimer > MIN_TIME_BETWEEN_BEEPS) { //if the sound isn;t currently playing and the sound timer is ok
+            sound.play(); //play sound
+            soundTimer = 0; //reset sound timer
         }
-        ofVec2f centroid = contour.getCentroid2D();
-        ofVec2f dir = centroid - loc;
-        dir.normalize();
-        loc += dir*vel.length();
+        ofVec2f centroid = contour.getCentroid2D(); //find the centroid of the polyLine blob
+        ofVec2f dir = centroid - loc; //find direction from center of the polyLine blob
+        dir.normalize(); //normalize that direction
+        loc += dir*vel.length(); //set the ball outside of the blob so it doesn't get stuck in it
+        //reverse the velocity (very rudimentary bouncing
         vel.x *= -1;
         vel.y *= -1;
     }

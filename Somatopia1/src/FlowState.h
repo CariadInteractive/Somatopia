@@ -21,6 +21,6 @@ public:
     void keyPressed(int key);
     string getName();
 private:
-    ofxCv::FlowFarneback farneback;
-    vector<Particle> particles;
+    ofxCv::FlowFarneback farneback; //ofxCv flow finder (farneback style!)
+    vector<Particle> particles; //vector of particles to be drawn on screen
 };
