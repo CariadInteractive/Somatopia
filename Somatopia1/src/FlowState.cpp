@@ -12,7 +12,7 @@ using namespace ofxCv;
 using namespace cv;
 
 void FlowState::setup() {
-    getSharedData().numFlowParticles = 1000;
+    getSharedData().numFlowParticles = 1500;
     ofSetVerticalSync(true);
     for(int i = 0; i < getSharedData().numFlowParticles; i++) {
         particles.push_back(Particle(ofRandom(ofGetWidth()), ofMap(i, 0, getSharedData().numFlowParticles, 10, ofGetHeight()-10)));
@@ -45,7 +45,7 @@ void FlowState::draw()
 {
 //    ofDrawBitmapString("Flow is currently under development: press 's' to return the splash page",  0, 10);
     ofSetColor(255);
-    if(!getSharedData().bVidOn) getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight());
+    if(getSharedData().bVidOn) getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetColor(getSharedData().background, 20);
     ofRect(0, 0, ofGetWidth(), ofGetHeight());
     ofSetColor(getSharedData().pallete[0]);
