@@ -17,14 +17,16 @@ void SplashState::setup()
     /*initialize buttons*/
     flow = StateButton(offSet, (int)ofGetHeight()/2 - offSet, buttonWidth, buttonHeight, "flow");
     cr = StateButton((int)ofGetWidth()/2, (int)ofGetHeight()/2 - offSet, buttonWidth, buttonHeight, "cr");
-    rhythm = StateButton(offSet, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "rhythm");
+//    rhythm = StateButton(offSet, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "rhythm");
+    soundWheel = StateButton(offSet, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "soundWheel");
     space = StateButton((int)ofGetWidth()/2, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "space");
     options = StateButton(offSet, offSet, buttonWidth/2, buttonHeight/2, "options");
     
     /*set the images for our 4 buttons*/
     flow.setImage("flowSplash.png");
     cr.setImage("crSplash.png");
-    rhythm.setImage("rhythmSplash.png");
+//    rhythm.setImage("rhythmSplash.png");
+    soundWheel.setImage("rhythmSplash.png");
     space.setImage("spaceSplash.png");
     options.setImage("optionsSplash.png");
 }
@@ -45,9 +47,12 @@ void SplashState::draw()
     cr.display();
     ofSetColor(255);
     getSharedData().futura.drawString("Call & Response", cr.getX() + cr.getW()/2 -getSharedData().futura.getStringBoundingBox("Call & Response", 0, 0).getWidth()/2, cr.getY() + cr.getH()/2);
-    rhythm.display();
+//    rhythm.display();
+//    ofSetColor(255);
+//    getSharedData().futura.drawString("Rhythm", rhythm.getX() + rhythm.getW()/2 -getSharedData().futura.getStringBoundingBox("Rhythm", 0, 0).getWidth()/2, rhythm.getY() + rhythm.getH()/2);
+    soundWheel.display();
     ofSetColor(255);
-    getSharedData().futura.drawString("Rhythm", rhythm.getX() + rhythm.getW()/2 -getSharedData().futura.getStringBoundingBox("Rhythm", 0, 0).getWidth()/2, rhythm.getY() + rhythm.getH()/2);
+    getSharedData().futura.drawString("Sound Wheel", soundWheel.getX() + soundWheel.getW()/2 -getSharedData().futura.getStringBoundingBox("Sound Wheel", 0, 0).getWidth()/2, soundWheel.getY() + soundWheel.getH()/2);
     space.display();
     ofSetColor(255);
     getSharedData().futura.drawString("Space", space.getX() + space.getW()/2 -getSharedData().futura.getStringBoundingBox("Space", 0, 0).getWidth()/2, space.getY() + space.getH()/2);
@@ -74,9 +79,13 @@ void SplashState::mousePressed(int x, int y, int button)
     {
         changeState(cr.getLink());
     }
-    else if(rhythm.isInside(x, y))
+//    else if(rhythm.isInside(x, y))
+//    {
+//        changeState(rhythm.getLink());
+//    }
+    else if(soundWheel.isInside(x, y))
     {
-        changeState(rhythm.getLink());
+        changeState(soundWheel.getLink());
     }
     else if(space.isInside(x, y))
     {

@@ -9,6 +9,7 @@
 #include "CRState.h"
 #include "SpaceState.h"
 #include "RhythmState.h"
+#include "SoundWheelState.h"
 
 class testApp : public ofBaseApp{
     

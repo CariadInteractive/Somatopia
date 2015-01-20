@@ -34,14 +34,14 @@
 #include "ofxCv.h"
 #include "ofxOpenCv.h"
 
-class SharedData
+class SharedData 
 {
 public:
     ofTrueTypeFont futura;
     ofVideoGrabber cam;
     
     ofxCv::ContourFinder contourFinder; //contourFinder
-    /* ofxOpenCv objects for handling backgorund subtraction (replace with cv::Mats to use only ofxCv */
+    /* ofxOpenCv objects for handling background subtraction (replace with cv::Mats to use only ofxCv */
     ofxCvColorImage	colImg;
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;
@@ -56,6 +56,8 @@ public:
     bool bVidOn; //bool for global video activation
     
     int numFlowParticles; //number of particles on flow app
+    
+    int wheelCount;
     
     void drawDebug(); //draw debug function
     /* functions to control global variables */

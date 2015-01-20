@@ -19,8 +19,8 @@ void OptionsState::setup() {
 
 void OptionsState::update() {
     getSharedData().cam.update(); //update camera
-    if(getSharedData().cam.isFrameNew()); { //check if camera frame is new
-        getSharedData().colImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240); //set colImg from pixelss from video grabber
+    if(getSharedData().cam.isFrameNew()) { //check if camera frame is new
+        getSharedData().colImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240); //set colImg from pixels from video grabber
         getSharedData().colImg.mirror(false, true); //mirror image
         getSharedData().grayImage = getSharedData().colImg; //set grey image to be the same as colImg (it stays grey because we initialized it like that in testApp.cpp)
         if(getSharedData().bLearnBackground) { //check if we need to learn the background

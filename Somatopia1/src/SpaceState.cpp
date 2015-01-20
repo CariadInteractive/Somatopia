@@ -15,6 +15,8 @@ using namespace cv;
 
 void SpaceState::setup()
 {
+    spaceCam.setDeviceID(getSharedData().cam.listDevices().size() - 1);
+    spaceCam.initGrabber(320, 240);
     ofSetRectMode(OF_RECTMODE_CORNER);
     tiles = vector<Tile>(); //initialize a vector of tiles
     int w = ofGetWidth() / NUMCOLS; //measure width of each tile
@@ -47,11 +49,10 @@ void SpaceState::update()
             }
         }
     }
-    getSharedData().cam.update(); //update camera
+    spaceCam.update(); //update camera
     
-    if(getSharedData().cam.isFrameNew()) { //check if the frame is new
-        
-        getSharedData().colImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240); //set colImg from pixels from video Grabber
+    if(spaceCam.isFrameNew()) { //check if the frame is new
+        getSharedData().colImg.setFromPixels(spaceCam.getPixels(), 320, 240); //set colImg from pixels from video Grabber
         getSharedData().colImg.mirror(false, true); //mirror image
 
         getSharedData().grayImage = getSharedData().colImg; //set grey image equal to colImg (it will remain grey because we initialized it that way in testApp.cpp)
@@ -73,9 +74,17 @@ void SpaceState::update()
                 tiles[j].checkContour(convexHull); //check if each tile is inside a blob
             }
         }
+        int closedCount = 0;
         for(int i = 0; i < tiles.size(); i++)
         {
             tiles[i].update(); //flip the tiles
+            if(tiles[i].isClosed()) closedCount++;
+        }
+        if(closedCount == NUMROWS*NUMCOLS) {
+            int newCol = (int)ofRandom(8);
+            for(int i = 0; i < tiles.size(); i++) {
+                tiles[i].reset(getSharedData().pallete[newCol]);
+            }
         }
     }
 }

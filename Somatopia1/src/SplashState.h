@@ -28,7 +28,8 @@ private:
     /*state buttons*/
     StateButton flow;
     StateButton cr;
-    StateButton rhythm;
+//    StateButton rhythm;
+    StateButton soundWheel;
     StateButton space;
     StateButton options;
 };

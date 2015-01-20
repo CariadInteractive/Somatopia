@@ -14,12 +14,13 @@ Particle::Particle(float x, float y) {
     vel = ofVec2f(5, 0); //set vel to 5 in the positive x
     maxAcc = 1; //set max acceleration rate
     maxVel = 10; //set max possible velocity
-    col = ofColor(0); //set color (defualt reset it later)
+    dispCol = fastCol = slowCol = ofColor(0); //set color (default reset it later)
 }
 
-void Particle::setCol(ofColor newCol)
-{
-    col = newCol; //set color to comthing pretty!
+void Particle::setCols(ofColor newSlowCol, ofColor newFastCol) {
+    dispCol = newSlowCol; //set color to something pretty!
+    slowCol = newSlowCol;
+    fastCol = newFastCol;
 }
 
 void Particle::update() {
@@ -37,13 +38,20 @@ void Particle::update() {
     //clear the mesh (the mesh is what we want to draw in the end)
     mesh.clear();
     //add all the points in the list to the mesh one at a time and set their colors with decreasing alpha values
+    
+    dispCol = slowCol;
+    float val = ofMap(vel.length(), 0, 20, 0, 1);
+    if(val>1) val = 1;
+    dispCol.lerp(fastCol, val);
+    
     float i = 1;
     for(list<ofVec2f>::iterator locIt = loc.begin(); locIt != loc.end(); locIt++) {
-        ofColor newCol = ofColor(col, 255/i);
+        ofColor newCol = ofColor(dispCol, 255/i);
         mesh.addColor(newCol);
         mesh.addVertex(ofVec3f(locIt->x, locIt->y, 0));
         i += 0.3;
     }
+
 }
 
 void Particle::display() {
@@ -59,34 +67,47 @@ void Particle::display() {
 
 void Particle::checkEdges() {
     //check edges of screen, if they are at the endge wrap them around to the opposite side
+    float randX = ofRandom(10, ofGetWidth() - 10);
+    float randY = ofRandom(10, ofGetHeight() - 10);
+
     if(loc.begin()->x > ofGetWidth()-10) {
         for(list<ofVec2f>::iterator locIt = loc.begin(); locIt != loc.end(); locIt++) {
-            locIt->x = 10;
+            //locIt->x = 10;
+            locIt->x = randX;
+            locIt->y = randY;
         }
     }
     else if(loc.begin()->x < 10) {
         for(list<ofVec2f>::iterator locIt = loc.begin(); locIt != loc.end(); locIt++) {
-            locIt->x = ofGetWidth() - 10;
+//            locIt->x = ofGetWidth() - 10;
+            locIt->x = randX;
+            locIt->y = randY;
         }
     }
     if(loc.begin()->y > ofGetHeight()-10) {
         for(list<ofVec2f>::iterator locIt = loc.begin(); locIt != loc.end(); locIt++) {
-            locIt->y = 10;
+//            locIt->y = 10;
+            locIt->x = randX;
+            locIt->y = randY;
         }
     }
     if(loc.begin()->y < 10) {
         for(list<ofVec2f>::iterator locIt = loc.begin(); locIt != loc.end(); locIt++) {
-            locIt->y = ofGetHeight() - 10;
+//            locIt->y = ofGetHeight() - 10;
+            locIt->x = randX;
+            locIt->y = randY;
         }
     }
 }
 
-void Particle::modAcc(ofVec2f flow)
-{
+void Particle::modAcc(ofVec2f flow) {
     acc = flow; //change the acceleration (use it the input flow values
 }
 
-ofVec2f Particle::getLoc()
-{
+ofVec2f Particle::getLoc() {
     return ofVec2f(loc.begin()->x, loc.begin()->y); //return the location for convenience
+}
+
+void Particle::setMaxVel(float newMaxVel) {
+    maxVel = ofMap(newMaxVel, 0, 10000, 0, 10);
 }

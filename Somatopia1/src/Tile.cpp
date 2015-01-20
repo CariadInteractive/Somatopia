@@ -20,7 +20,7 @@ Tile::Tile(int x, int y, int w, int h) :
     outCol = ofColor(255);
     vidOn = false;
     closing = false;
-    opening = false;
+    closed = false;
     flipSpeed = 20;
 }
 
@@ -33,22 +33,21 @@ void Tile::update() {
     //a bit of complexish logic to check if I should be closing or opening
     if(inside) {
         closing = true;
-        opening = false;
     }
-    else {
-        opening = true;
-        closing = false;
-    }
+//    else {
+//        closing = false;
+//    }
     
     //either close or open based on state
     if(closing) {
         w -= flipSpeed;
         w = max(w, -fullWidth);
     }
-    if(opening) {
-        w += flipSpeed;
-        w = min(w, fullWidth);
-    }
+    if(w == -fullWidth) closed = true;
+//    if(opening) {
+//        w += flipSpeed;
+//        w = min(w, fullWidth);
+//    }
     //set inside to be false at the end of each update loop because it will get set back to true before the next action
     inside = false;
 }
@@ -87,4 +86,17 @@ void Tile::deactivateVid() {
 
 bool Tile::vidIsOn() {
     return vidOn; //check if tile thinks video should be on
+}
+
+void Tile::reset(ofColor newInCol) {
+    closed = false;
+    closing = false;
+    inside = false;
+    outCol = inCol;
+    w = fullWidth;
+    inCol = (newInCol == outCol) ? ofColor(0, 0, 0,0) : newInCol;
+}
+
+bool Tile::isClosed() {
+    return closed;
 }

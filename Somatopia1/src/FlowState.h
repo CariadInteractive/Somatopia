@@ -23,4 +23,5 @@ public:
 private:
     ofxCv::FlowFarneback farneback; //ofxCv flow finder (farneback style!)
     vector<Particle> particles; //vector of particles to be drawn on screen
+    ofVideoGrabber flowCam;
 };

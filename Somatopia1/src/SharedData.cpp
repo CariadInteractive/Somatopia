@@ -34,15 +34,15 @@ void SharedData::drawDebug()
         ofRect(360,540,320,240);
         ofSetHexColor(0xffffff);
         
-        int n = contourFinder.size();
-        for(int i = 0; i < n; i++) {
-            ofSetColor(ofColor::yellow);
-            ofPolyline convexHull = ofxCv::toOf(contourFinder.getConvexHull(i));
-            ofPushMatrix();
-            ofTranslate(360, 540);
-            convexHull.draw();
-            ofPopMatrix();
-        }
+//        int n = contourFinder.size();
+//        for(int i = 0; i < n; i++) {
+//            ofSetColor(ofColor::yellow);
+//            ofPolyline convexHull = ofxCv::toOf(contourFinder.getConvexHull(i));
+//            ofPushMatrix();
+//            ofTranslate(360, 540);
+//            convexHull.draw();
+//            ofPopMatrix();
+//        }
         
         // draw some information in debug mode:
         ofSetHexColor(0xffffff);

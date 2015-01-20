@@ -22,4 +22,5 @@ public:
     
 private:
     vector<Tile> tiles; //vector of tiles covering screen
+    ofVideoGrabber spaceCam;
 };

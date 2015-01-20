@@ -10,6 +10,7 @@
 
 void CRState::setup()
 {
+    soundStream.setDeviceID(getSharedData().cam.listDevices().size() - 1);
     //initialize sounds.
     sensitivity = 0.7;
     soundStream.setup(0, 2, 44100, 512, 1);
@@ -32,10 +33,25 @@ void CRState::setup()
     images[4].loadImage("Square.png");
     images[5].loadImage("Triangle.png");
     images[6].loadImage("Asterix.png");
+    
+    emptyImages[0].loadImage("Circle_rev.png");
+    emptyImages[1].loadImage("Cross_rev.png");
+    emptyImages[2].loadImage("Heart_rev.png");
+    emptyImages[3].loadImage("Hexagon_rev.png");
+    emptyImages[4].loadImage("Square_rev.png");
+    emptyImages[5].loadImage("Triangle_rev.png");
+    emptyImages[6].loadImage("Asterix_rev.png");
 }
 
 void CRState::update()
 {
+    if(getSharedData().bVidOn) {
+        getSharedData().cam.update(); //update camera
+        if(getSharedData().cam.isFrameNew()) { //if there is a new frame
+            getSharedData().colImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240); //set col Image from videoGrabber pixels
+            getSharedData().colImg.mirror(false, true); //mirror the image
+        }
+    }
     if(mustSwap) { //if a swap has been triggered
         swap(); //swap the image
         mustSwap = false; //set swap to false
@@ -49,7 +65,17 @@ void CRState::draw()
     ofPushStyle();
     ofSetColor(getSharedData().pallete[colorIndex]); //set color to our swapped color
     ofSetRectMode(OF_RECTMODE_CENTER);
-    images[imageIndex].draw(ofGetWidth()/2, ofGetHeight()/2); //draw image
+    if(!getSharedData().bVidOn) images[imageIndex].draw(ofGetWidth()/2, ofGetHeight()/2); //draw image
+    else {
+        ofSetColor(255);
+        ofPushStyle();
+        ofSetRectMode(OF_RECTMODE_CORNER);
+        getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight());
+        ofPopStyle();
+        ofSetColor(getSharedData().background);
+        emptyImages[imageIndex].draw(ofGetWidth()/2, ofGetHeight()/2);
+    }
+    fillPage();
     ofPopStyle();
 }
 
@@ -96,6 +122,19 @@ void CRState::swap() {
     imageIndex = (int)ofRandom(7); //change image
 }
 
+void CRState::fillPage() {
+    ofPushStyle();
+    ofSetRectMode(OF_RECTMODE_CORNER);
+    ofSetColor(getSharedData().background);
+    float yMargin = (ofGetHeight() - emptyImages[imageIndex].getHeight())/2;
+    float xMargin = (ofGetWidth() - emptyImages[imageIndex].getWidth())/2;
+    ofRect(0, 0, ofGetWidth(), yMargin);
+    ofRect(0, 0, xMargin, ofGetHeight());
+    ofRect(0, ofGetHeight() - yMargin - 1, ofGetWidth(), yMargin);
+    ofRect(ofGetWidth() - xMargin - 1, 0, xMargin, ofGetHeight());
+    ofPopStyle();
+}
+
 void CRState::audioIn(float *samples, int length, int numChannels) {
     for(int i =0 ; i < length; i++) {
         float f = ABS(samples[i]); //calculate the volume of incoming audio
@@ -105,6 +144,7 @@ void CRState::audioIn(float *samples, int length, int numChannels) {
         if(displayVolume>sensitivity) { //check if volume is above preset sensitivity
             if(audioFramesSinceLastSwapped>MIN_FRAMES_BETWEEN_SWAPS) { //check if we havn't swapped recently
                 tryToSwap(); //swap if the volme is high enough
+                getSharedData().wheelCount++;
                 audioFramesSinceLastSwapped = 0; //reset audio frames to 0
             }
         }

@@ -18,6 +18,7 @@
 		1A604BB01A5B13EE00FB1665 /* SpaceState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A604BAE1A5B13EE00FB1665 /* SpaceState.cpp */; };
 		1A604BB31A5B140F00FB1665 /* SplashState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A604BB11A5B140F00FB1665 /* SplashState.cpp */; };
 		1A604BB61A5B144400FB1665 /* StateButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A604BB41A5B144400FB1665 /* StateButton.cpp */; };
+		1AC7CAA31A6E9050001D2FC3 /* SoundWheelState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC7CAA11A6E9050001D2FC3 /* SoundWheelState.cpp */; };
 		1AD5E66A1A5B503C004CBB4A /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD5E6681A5B503C004CBB4A /* Ball.cpp */; };
 		1AD5E6701A5C08CB004CBB4A /* SharedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD5E66F1A5C08CB004CBB4A /* SharedData.cpp */; };
 		1AD5E6731A5C10BF004CBB4A /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD5E6711A5C10BF004CBB4A /* Tile.cpp */; };
@@ -119,6 +120,8 @@
 		1A604BB21A5B140F00FB1665 /* SplashState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashState.h; sourceTree = "<group>"; };
 		1A604BB41A5B144400FB1665 /* StateButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateButton.cpp; sourceTree = "<group>"; };
 		1A604BB51A5B144400FB1665 /* StateButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateButton.h; sourceTree = "<group>"; };
+		1AC7CAA11A6E9050001D2FC3 /* SoundWheelState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundWheelState.cpp; sourceTree = "<group>"; };
+		1AC7CAA21A6E9050001D2FC3 /* SoundWheelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundWheelState.h; sourceTree = "<group>"; };
 		1AD5E6681A5B503C004CBB4A /* Ball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ball.cpp; sourceTree = "<group>"; };
 		1AD5E6691A5B503C004CBB4A /* Ball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ball.h; sourceTree = "<group>"; };
 		1AD5E66F1A5C08CB004CBB4A /* SharedData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SharedData.cpp; sourceTree = "<group>"; };
@@ -762,6 +765,8 @@
 				1AD5E6721A5C10BF004CBB4A /* Tile.h */,
 				1AD5E6771A5D4066004CBB4A /* Particle.cpp */,
 				1AD5E6781A5D4066004CBB4A /* Particle.h */,
+				1AC7CAA11A6E9050001D2FC3 /* SoundWheelState.cpp */,
+				1AC7CAA21A6E9050001D2FC3 /* SoundWheelState.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -889,6 +894,7 @@
 				169D3C72FDE6C5590A1616F5 /* ofxCvFloatImage.cpp in Sources */,
 				1A604BB31A5B140F00FB1665 /* SplashState.cpp in Sources */,
 				FB09C6B2A1DA0EA217240CB8 /* ofxCvGrayscaleImage.cpp in Sources */,
+				1AC7CAA31A6E9050001D2FC3 /* SoundWheelState.cpp in Sources */,
 				E212C821D1064B92DD953A42 /* ofxCvHaarFinder.cpp in Sources */,
 				1AD5E6731A5C10BF004CBB4A /* Tile.cpp in Sources */,
 				63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */,

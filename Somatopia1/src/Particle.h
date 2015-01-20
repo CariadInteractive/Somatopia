@@ -12,11 +12,12 @@
 class Particle
 {
 public:
-    void setCol(ofColor newCol);
+    void setCols(ofColor newSlowCol, ofColor newFastCol);
     void update();
     void display();
     void checkEdges();
     void modAcc(ofVec2f flow);
+    void setMaxVel(float newMaxVel);
     ofVec2f getLoc();
     Particle(float x, float y);
 private:
@@ -27,5 +28,5 @@ private:
     float maxVel;
     float rad;
     ofMesh mesh;
-    ofColor col;
+    ofColor dispCol, slowCol, fastCol;
 };

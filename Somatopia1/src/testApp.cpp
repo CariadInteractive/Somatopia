@@ -7,6 +7,11 @@ void testApp::setup(){
     stateMachine.enableKeyEvents();
     stateMachine.enableMouseEvents();
     
+//    cout << "Devices: " << endl;
+    stateMachine.getSharedData().cam.setDeviceID(1);
+//    stateMachine.getSharedData().cam.setDeviceID(1166760);
+
+//    stateMachine.getSharedData().cam.listDevices();
     //Allocate space for our images
     stateMachine.getSharedData().colImg.allocate(320,240);
     stateMachine.getSharedData().grayImage.allocate(320,240);
@@ -42,7 +47,7 @@ void testApp::setup(){
     
     //initialize our blob finder
     stateMachine.getSharedData().contourFinder.setMinAreaRadius(10);
-    stateMachine.getSharedData().contourFinder.setMaxAreaRadius(150);
+    stateMachine.getSharedData().contourFinder.setMaxAreaRadius(100);
     stateMachine.getSharedData().contourFinder.setInvert(false);
     
     //set the background to our background
@@ -55,6 +60,7 @@ void testApp::setup(){
     stateMachine.addState<CRState>();
     stateMachine.addState<SpaceState>();
     stateMachine.addState<RhythmState>();
+    stateMachine.addState<SoundWheelState>();
     
     //set first state
     stateMachine.changeState("splash");
