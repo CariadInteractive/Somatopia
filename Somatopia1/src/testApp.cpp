@@ -8,7 +8,7 @@ void testApp::setup(){
     stateMachine.enableMouseEvents();
     
 //    cout << "Devices: " << endl;
-    stateMachine.getSharedData().cam.setDeviceID(1);
+    stateMachine.getSharedData().cam.setDeviceID(stateMachine.getSharedData().cam.listDevices().size() - 1);
 //    stateMachine.getSharedData().cam.setDeviceID(1166760);
 
 //    stateMachine.getSharedData().cam.listDevices();
@@ -26,6 +26,26 @@ void testApp::setup(){
     stateMachine.getSharedData().pallete[4] = ofColor(170, 203, 93); //green
     stateMachine.getSharedData().pallete[5] = ofColor(0, 122, 195); //darkBlue
     stateMachine.getSharedData().pallete[6] = ofColor(177, 84, 194); //purple
+    stateMachine.getSharedData().pallete[7] = ofColor(255, 255, 255); //white
+    stateMachine.getSharedData().pallete[8] = ofColor(127, 127, 127); //grey
+    stateMachine.getSharedData().pallete[9] = ofColor(248, 200, 212); //pink
+    
+    //load images we are going to use
+    stateMachine.getSharedData().images[0].loadImage("Circle.png");
+    stateMachine.getSharedData().images[1].loadImage("Cross.png");
+    stateMachine.getSharedData().images[2].loadImage("Heart.png");
+    stateMachine.getSharedData().images[3].loadImage("Hexagon.png");
+    stateMachine.getSharedData().images[4].loadImage("Square.png");
+    stateMachine.getSharedData().images[5].loadImage("Triangle.png");
+    stateMachine.getSharedData().images[6].loadImage("Asterix.png");
+    
+    stateMachine.getSharedData().emptyImages[0].loadImage("Circle_rev.png");
+    stateMachine.getSharedData().emptyImages[1].loadImage("Cross_rev.png");
+    stateMachine.getSharedData().emptyImages[2].loadImage("Heart_rev.png");
+    stateMachine.getSharedData().emptyImages[3].loadImage("Hexagon_rev.png");
+    stateMachine.getSharedData().emptyImages[4].loadImage("Square_rev.png");
+    stateMachine.getSharedData().emptyImages[5].loadImage("Triangle_rev.png");
+    stateMachine.getSharedData().emptyImages[6].loadImage("Asterix_rev.png");
     
     //save the 4th color as the background color for reference later
     stateMachine.getSharedData().background = stateMachine.getSharedData().pallete[3];
@@ -61,6 +81,7 @@ void testApp::setup(){
     stateMachine.addState<SpaceState>();
     stateMachine.addState<RhythmState>();
     stateMachine.addState<SoundWheelState>();
+    stateMachine.addState<MirrorState>();
     
     //set first state
     stateMachine.changeState("splash");

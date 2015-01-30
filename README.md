@@ -18,3 +18,5 @@ ofxOpenCV: included in oF by default
 ofxStateMachine: https://github.com/neilmendoza/ofxStateMachine
 
 ofxCV: https://github.com/kylemcdonald/ofxCv
+
+ofxJSON: https://github.com/jefftimesten/ofxJSON

@@ -40,6 +40,7 @@ void FlowState::update() {
         particles[i].setMaxVel(maxVel);
         particles[i].update(); //update particles velocity and position
         particles[i].checkEdges(); //check to see if they bump into the sides
+        particles[i].modAlpha();
         
         //map the particles from screen space into camera space
 
@@ -48,7 +49,7 @@ void FlowState::update() {
         
         ofRectangle region = ofRectangle(x, y, 1, 1); //set region to calculate flow
         ofVec2f accMod = farneback.getAverageFlowInRegion(region); //measure flow in that region
-        float flowThresh = 1; //set flow Threshold below which we give it an artificial flow
+//        float flowThresh = 1; //set flow Threshold below which we give it an artificial flow
 //        if(accMod.length() < flowThresh) accMod = ofVec2f(0.1, 0); //set acceleration to a slight positive X-value if flow is below a certain threshold
         particles[i].modAcc(accMod); //modify the acceleration of each particle based on the flow in it's region
     }
@@ -83,4 +84,6 @@ void FlowState::keyPressed(int key)
     {
         getSharedData().bVidOn = !getSharedData().bVidOn; //toggle video on and off
     }
+    getSharedData().handleUtils(key);
+
 }

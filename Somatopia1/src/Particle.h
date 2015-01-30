@@ -17,11 +17,14 @@ public:
     void display();
     void checkEdges();
     void modAcc(ofVec2f flow);
+    void modAlpha();
     void setMaxVel(float newMaxVel);
     ofVec2f getLoc();
+    ofVec2f getVel();
     Particle(float x, float y);
 private:
     list<ofVec2f> loc;
+    int alpha;
     ofVec2f vel;
     ofVec2f acc;
     float maxAcc;

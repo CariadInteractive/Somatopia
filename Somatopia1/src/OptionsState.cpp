@@ -58,6 +58,8 @@ void OptionsState::keyPressed(int key) {
     getSharedData().handleDebug(key);
     getSharedData().handleBackground(key);
     getSharedData().handleThreshold(key);
+    getSharedData().handleUtils(key);
+
 }
 
 void OptionsState::mousePressed(int x, int y, int button) {

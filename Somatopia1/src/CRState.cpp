@@ -10,7 +10,9 @@
 
 void CRState::setup()
 {
-    soundStream.setDeviceID(getSharedData().cam.listDevices().size() - 1);
+//    soundStream.setDeviceID(getSharedData().cam.listDevices().size() - 1);
+    getSharedData().cam.listDevices();
+    
     //initialize sounds.
     sensitivity = 0.7;
     soundStream.setup(0, 2, 44100, 512, 1);
@@ -26,21 +28,21 @@ void CRState::setup()
     mustSwap = false;
     
     //load images we are going to use
-    images[0].loadImage("Circle.png");
-    images[1].loadImage("Cross.png");
-    images[2].loadImage("Heart.png");
-    images[3].loadImage("Hexagon.png");
-    images[4].loadImage("Square.png");
-    images[5].loadImage("Triangle.png");
-    images[6].loadImage("Asterix.png");
+    images[0] = getSharedData().images[0];
+    images[1] = getSharedData().images[1];
+    images[2] = getSharedData().images[2];
+    images[3] = getSharedData().images[3];
+    images[4] = getSharedData().images[4];
+    images[5] = getSharedData().images[5];
+    images[6] = getSharedData().images[6];
     
-    emptyImages[0].loadImage("Circle_rev.png");
-    emptyImages[1].loadImage("Cross_rev.png");
-    emptyImages[2].loadImage("Heart_rev.png");
-    emptyImages[3].loadImage("Hexagon_rev.png");
-    emptyImages[4].loadImage("Square_rev.png");
-    emptyImages[5].loadImage("Triangle_rev.png");
-    emptyImages[6].loadImage("Asterix_rev.png");
+    emptyImages[0] = getSharedData().emptyImages[0];
+    emptyImages[1] = getSharedData().emptyImages[1];
+    emptyImages[2] = getSharedData().emptyImages[2];
+    emptyImages[3] = getSharedData().emptyImages[3];
+    emptyImages[4] = getSharedData().emptyImages[4];
+    emptyImages[5] = getSharedData().emptyImages[5];
+    emptyImages[6] = getSharedData().emptyImages[6];
 }
 
 void CRState::update()
@@ -107,6 +109,7 @@ void CRState::keyPressed(int key)
     {
         changeState("splash"); //change state back to main page
     }
+    getSharedData().handleUtils(key);
 }
 
 void CRState::tryToSwap() {

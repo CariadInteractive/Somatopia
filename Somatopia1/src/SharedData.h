@@ -54,6 +54,9 @@ public:
     bool bLearnBackground; //bool for learning background
     bool bDebugOn; //bool for drawing debug
     bool bVidOn; //bool for global video activation
+    bool bIsCursorHidden; //keep track of whether or not the cursor has been hidden
+    
+
     
     int numFlowParticles; //number of particles on flow app
     
@@ -64,7 +67,14 @@ public:
     void handleDebug(int key);
     void handleBackground(int key);
     void handleThreshold(int key);
+    void handleUtils(int key);
     
-    ofColor pallete[7]; //color pallete in array
+    int mapColor(std::string colorName);
+    int mapShape(std::string shapeName);
+
+    ofColor pallete[10]; //color pallete in array
+    ofImage images[7]; //array of images
+    ofImage emptyImages[7]; //array of empty images
     ofColor background; //background color (keeping track of it here
+    
 };

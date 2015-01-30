@@ -9,12 +9,19 @@
 #pragma once
 
 #include "ofxState.h"
+#include "ofxJSON.h"
 #include "SharedData.h"
 #include "ofMain.h"
 
 class SoundWheelState : public itg::ofxState<SharedData>, public ofBaseSoundInput
 {
 public:
+    struct User {
+        ofImage emptyImage, fullImage;
+        ofImage portrait;
+        ofColor col;
+        std::string name;
+    };
     void setup();
     void update();
     void draw();
@@ -23,9 +30,9 @@ public:
     void fillPage();
     string getName();
 private:
-    int photoIndex;
+    int userIndex;
     ofColor col;
     ofImage fullImage;
     ofImage emptyImage;
-    ofImage photos[10];
+    vector<User> users;
 };

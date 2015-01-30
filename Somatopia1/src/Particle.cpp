@@ -11,10 +11,11 @@
 Particle::Particle(float x, float y) {
     loc.assign(20, ofVec2f(x, y)); //loc is a list of points that I will be popping and pushing from, I want there to be 20 points and I want them to be ofVec2fs
     acc = ofVec2f(0, 0); //set acc to 0
-    vel = ofVec2f(5, 0); //set vel to 5 in the positive x
+    vel = ofVec2f(0, 0); //set vel to 5 in the positive x
     maxAcc = 1; //set max acceleration rate
     maxVel = 10; //set max possible velocity
     dispCol = fastCol = slowCol = ofColor(0); //set color (default reset it later)
+    alpha = 0;
 }
 
 void Particle::setCols(ofColor newSlowCol, ofColor newFastCol) {
@@ -46,7 +47,7 @@ void Particle::update() {
     
     float i = 1;
     for(list<ofVec2f>::iterator locIt = loc.begin(); locIt != loc.end(); locIt++) {
-        ofColor newCol = ofColor(dispCol, 255/i);
+        ofColor newCol = ofColor(dispCol, alpha/i);
         mesh.addColor(newCol);
         mesh.addVertex(ofVec3f(locIt->x, locIt->y, 0));
         i += 0.3;
@@ -55,14 +56,14 @@ void Particle::update() {
 }
 
 void Particle::display() {
-    //draw the mesh
-    ofPushStyle();
-    mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
-    mesh.draw();
-    //draw a circle at the front of the object
-    ofSetColor(mesh.getColor(0));
-    ofCircle(loc.begin()->x, loc.begin()->y, 5);
-    ofPopStyle();
+        //draw the mesh
+        ofPushStyle();
+        mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
+        mesh.draw();
+        //draw a circle at the front of the object
+        ofSetColor(mesh.getColor(0));
+        ofCircle(loc.begin()->x, loc.begin()->y, 5);
+        ofPopStyle();
 }
 
 void Particle::checkEdges() {
@@ -104,10 +105,21 @@ void Particle::modAcc(ofVec2f flow) {
     acc = flow; //change the acceleration (use it the input flow values
 }
 
+void Particle::modAlpha() {
+    if(vel.length() < 3) alpha-=5;
+    else alpha+=5;
+    alpha = min(alpha, 255);
+    alpha = max(0, alpha);
+}
+
 ofVec2f Particle::getLoc() {
     return ofVec2f(loc.begin()->x, loc.begin()->y); //return the location for convenience
 }
 
 void Particle::setMaxVel(float newMaxVel) {
-    maxVel = ofMap(newMaxVel, 0, 10000, 0, 10);
+    maxVel = ofMap(newMaxVel, 0, 10000, 1, 10);
+}
+
+ofVec2f Particle::getVel() {
+    return vel;
 }

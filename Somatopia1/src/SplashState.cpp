@@ -21,6 +21,7 @@ void SplashState::setup()
     soundWheel = StateButton(offSet, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "soundWheel");
     space = StateButton((int)ofGetWidth()/2, (int)ofGetHeight()*3/4 - offSet, buttonWidth, buttonHeight, "space");
     options = StateButton(offSet, offSet, buttonWidth/2, buttonHeight/2, "options");
+    mirror = StateButton(offSet, (int)ofGetHeight()/4 - offSet, buttonWidth, buttonHeight, "mirror");
     
     /*set the images for our 4 buttons*/
     flow.setImage("flowSplash.png");
@@ -29,6 +30,7 @@ void SplashState::setup()
     soundWheel.setImage("rhythmSplash.png");
     space.setImage("spaceSplash.png");
     options.setImage("optionsSplash.png");
+    mirror.setImage("mirrorSplash.png");
 }
 
 void SplashState::update() {
@@ -41,6 +43,9 @@ void SplashState::draw()
     getSharedData().futura.drawString("Somatopia", ofGetWidth()/2 - getSharedData().futura.getStringBoundingBox("Somatopia", 0, 0).getWidth()/2, ofGetHeight() * 0.1);
     
     /*draw all of our interaction buttons*/
+    mirror.display();
+    getSharedData().futura.drawString("Mirror", mirror.getX() + mirror.getW()/2 -getSharedData().futura.getStringBoundingBox("Mirror", 0, 0).getWidth()/2, mirror.getY() + mirror.getH()/2);
+    
     flow.display();
     ofSetColor(255);
     getSharedData().futura.drawString("Flow", flow.getX() + flow.getW()/2 -getSharedData().futura.getStringBoundingBox("Flow", 0, 0).getWidth()/2, flow.getY() + flow.getH()/2);
@@ -57,7 +62,7 @@ void SplashState::draw()
     ofSetColor(255);
     getSharedData().futura.drawString("Space", space.getX() + space.getW()/2 -getSharedData().futura.getStringBoundingBox("Space", 0, 0).getWidth()/2, space.getY() + space.getH()/2);
     
-    /*draw our optios button*/
+    /*draw our options button*/
     options.display();
     ofSetColor(255);
     getSharedData().futura.drawString("Options", options.getX() + options.getW()/2 -getSharedData().futura.getStringBoundingBox("Options", 0, 0).getWidth()/2, options.getY() + options.getH()/2);
@@ -95,4 +100,14 @@ void SplashState::mousePressed(int x, int y, int button)
     {
         changeState(options.getLink());
     }
+    else if(mirror.isInside(x, y))
+    {
+        changeState(mirror.getLink());
+    }
 }
+
+void SplashState::keyPressed(int key) {
+    getSharedData().handleUtils(key);
+}
+
+

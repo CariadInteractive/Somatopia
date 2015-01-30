@@ -36,5 +36,5 @@ private:
     bool mustSwap; //bool to tell update to change images and colors
     bool vidOn; //bool to check if vid is on (deprecated I believe)
     ofImage images[7]; //array of images
-    ofImage emptyImages[7];
+    ofImage emptyImages[7]; //array of empty images
 };

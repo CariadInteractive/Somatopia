@@ -26,7 +26,10 @@ Tile::Tile(int x, int y, int w, int h) :
 
 void Tile::setCols(ofColor newInCol, ofColor newOutCol) { //set inside and outside colors
     inCol = inColMem = newInCol;
+    inCol = inColMem = ofColor(newInCol, 127);
     outCol = newOutCol;
+    outCol = ofColor(newOutCol, 127);
+    
 }
 
 void Tile::update() {
@@ -94,7 +97,7 @@ void Tile::reset(ofColor newInCol) {
     inside = false;
     outCol = inCol;
     w = fullWidth;
-    inCol = (newInCol == outCol) ? ofColor(0, 0, 0,0) : newInCol;
+    inCol = (newInCol == outCol) ? ofColor(0, 0, 0,0) : ofColor(newInCol, 127);
 }
 
 bool Tile::isClosed() {

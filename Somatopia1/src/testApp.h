@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxStateMachine.h"
+#include "ofxJSON.h"
 #include "SharedData.h"
 #include "SplashState.h"
 #include "FlowState.h"
@@ -10,6 +11,7 @@
 #include "SpaceState.h"
 #include "RhythmState.h"
 #include "SoundWheelState.h"
+#include "MirrorState.h"
 
 class testApp : public ofBaseApp{
     

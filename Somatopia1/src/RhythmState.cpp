@@ -82,4 +82,6 @@ void RhythmState::keyPressed(int key)
     getSharedData().handleDebug(key);
     getSharedData().handleBackground(key);
     getSharedData().handleThreshold(key);
+    getSharedData().handleUtils(key);
+
 }

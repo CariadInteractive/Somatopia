@@ -17,6 +17,7 @@ public:
     void setup();
     void update();
     void draw();
+    void keyPressed(int key);
     void mousePressed(int x, int y, int button);
     string getName();
     
@@ -32,4 +33,5 @@ private:
     StateButton soundWheel;
     StateButton space;
     StateButton options;
+    StateButton mirror;
 };

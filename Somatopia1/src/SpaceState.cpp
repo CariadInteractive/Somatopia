@@ -99,7 +99,6 @@ void SpaceState::draw()
     for(int i = 0; i < tiles.size(); i++) {
         tiles[i].display(); //draw the tiles
     }
-    
     getSharedData().drawDebug(); //draw debug images if debug is turned on
 }
 
@@ -125,4 +124,6 @@ void SpaceState::keyPressed(int key)
     getSharedData().handleDebug(key);
     getSharedData().handleBackground(key);
     getSharedData().handleThreshold(key);
+    getSharedData().handleUtils(key);
+
 }
