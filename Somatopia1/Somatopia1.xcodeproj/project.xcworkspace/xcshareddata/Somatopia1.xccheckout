@@ -12,8 +12,6 @@
 	<dict>
 		<key>5431C3098324239824B3A313883F8CE1A84C3E6A</key>
 		<string>https://github.com/neilmendoza/ofxStateMachine.git</string>
-		<key>5DB7C332A3A89035E93556A2A38BF414005BA671</key>
-		<string>https://github.com/jefftimesten/ofxJSON.git</string>
 		<key>8848C480BDF4B354DDB79A36549F0F52226D3050</key>
 		<string>https://github.com/CariadInteractive/Somatopia.git</string>
 	</dict>
@@ -22,9 +20,7 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>5431C3098324239824B3A313883F8CE1A84C3E6A</key>
-		<string>../../../../addons/ofxStateMachine</string>
-		<key>5DB7C332A3A89035E93556A2A38BF414005BA671</key>
-		<string>../../../../../addons/ofxJSON</string>
+		<string>../../../../../addons/ofxStateMachine</string>
 		<key>8848C480BDF4B354DDB79A36549F0F52226D3050</key>
 		<string>../../..</string>
 	</dict>
@@ -36,14 +32,6 @@
 	<string>8848C480BDF4B354DDB79A36549F0F52226D3050</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>5DB7C332A3A89035E93556A2A38BF414005BA671</string>
-			<key>IDESourceControlWCCName</key>
-			<string>ofxJSON</string>
-		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

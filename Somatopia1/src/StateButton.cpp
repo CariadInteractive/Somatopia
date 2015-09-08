@@ -13,11 +13,10 @@ y (y),
 w (w),
 h (h),
 link (link)
-{/*initialize EVERYTHING!*/}
+{ }
 
-StateButton::StateButton() //default constructor
+StateButton::StateButton()
 {
-    /*Give all variables dummy values*/
     x = 0;
     y = 0;
     w = 0;
@@ -29,8 +28,8 @@ void StateButton::display()
 {
     ofSetColor(255);
     ofFill();
-    if(imgLoaded) img.draw(x, y, w, h); //draw image if there is one
-    else { //if there's no image just draw a box with a color in it
+    if(imgLoaded) img.draw(x, y, w, h);
+    else {
         ofPushStyle();
         ofSetColor(col);
         ofRect(x, y, w, h);
@@ -38,13 +37,12 @@ void StateButton::display()
     }
 }
 
-bool StateButton::isInside(float xVal, float yVal) //check if the x, y values are inside the button (usually pass in mosueX and mouseY to chekc if you are clicking on it)
+bool StateButton::isInside(float xVal, float yVal)
 {
     if((xVal < x + w && xVal > x) && (yVal < y + h && yVal > y)) return true;
     else return false;
 }
 
-//Utility functions for geting X Y W H Link etc.
 int StateButton::getX()
 {
     return x;
@@ -70,14 +68,11 @@ string StateButton::getLink()
     return link;
 }
 
-void StateButton::setImage(string imageLink) //set image function
+void StateButton::setImage(string imageLink)
 {
     imgLoaded = img.loadImage(imageLink);
 }
 
-void StateButton::setCol(ofColor newCol) { //set color function
+void StateButton::setCol(ofColor newCol) {
     col = newCol;
 }
-
-
-

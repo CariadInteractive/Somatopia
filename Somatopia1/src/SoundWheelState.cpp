@@ -10,35 +10,15 @@
 
 void SoundWheelState::setup() {
     
-    userIndex = (int)ofRandom(users.size());
+    userIndex = (int)ofRandom(getSharedData().users.size());
     
-    fullImage.loadImage("Heart.png");
-    emptyImage.loadImage("Heart_rev.png");
     getSharedData().wheelCount = 0;
     
-    ofxJSONElement json;
-    
-    std::string file = "Users.json";
-    bool parsingSuccessful = json.open(file);
-    if(parsingSuccessful) {
-        ofLogNotice("SoundWheelState::setup") << json.getRawString(true);
-        for(int i = 0; i < json["Users"].size(); i++) {
-            ofImage portrait;
-            bool loaded = portrait.loadImage("portraits/"+json["Users"][i]["name"].asString()+".png");
-            if(!loaded) loaded = portrait.loadImage("portraits/"+json["Users"][i]["name"].asString()+".jpg");
-            if(!loaded) cout<<"unable to load portrait for "<< json["Users"][i]["name"].asString() << ", ensure your file has a .png or .jpg extension and the name of the file matches the name in Users.json" << endl;
-            User tmpuser = {
-                .col = getSharedData().pallete[getSharedData().mapColor(json["Users"][i]["color"].asString())],
-                .portrait = portrait,
-                .emptyImage = getSharedData().emptyImages[getSharedData().mapShape(json["Users"][i]["shape"].asString())],
-                .fullImage = getSharedData().images[getSharedData().mapShape(json["Users"][i]["shape"].asString())],
-                .name = json["Users"][i]["name"].asString()
-            };
-            users.push_back(tmpuser);
-        }
-    }
-    
     col = getSharedData().pallete[2];
+}
+
+void SoundWheelState::stateEnter() {
+    getSharedData().wheelCount = 0;
 }
 
 void SoundWheelState::update() {
@@ -53,34 +33,33 @@ void SoundWheelState::draw() {
     ofPushStyle();
     ofSetRectMode(OF_RECTMODE_CENTER);
     ofSetColor(255);
-    users[userIndex].portrait.draw(ofGetWidth()/2, ofGetHeight()/2);
+    getSharedData().users[userIndex].portrait.draw(ofGetWidth()/2, ofGetHeight()/2, 540, 360);
     ofSetColor(getSharedData().background);
-    users[userIndex].emptyImage.draw(ofGetWidth()/2, ofGetHeight()/2);
+    getSharedData().emptyImages[getSharedData().users[userIndex].imageIndex].draw(ofGetWidth()/2, ofGetHeight()/2, 320, 320);
     fillPage();
-    ofSetColor(users[userIndex].col);
+    ofSetColor(getSharedData().pallete[getSharedData().users[userIndex].colIndex]);
     for(int i = 0; i < getSharedData().wheelCount; i++) {
         ofPushMatrix();
         ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
         ofRotateZ(ofMap(i, 0, 9, 0, 360));
-        users[userIndex].fullImage.draw(0, -emptyImage.getHeight()/2, 80, 80);
+        getSharedData().images[getSharedData().users[userIndex].imageIndex].draw(0, -getSharedData().images[getSharedData().users[userIndex].imageIndex].getHeight()/4, 80, 80);
         ofPopMatrix();
     }
-    getSharedData().futura.drawString(users[userIndex].name, ofGetWidth()/2 - getSharedData().futura.getStringBoundingBox(users[userIndex].name, 0, 0).getWidth()/2, ofGetHeight()/2 + emptyImage.getHeight()/2);
+    getSharedData().futura.drawString(getSharedData().users[userIndex].name, ofGetWidth()/2 - getSharedData().futura.getStringBoundingBox(getSharedData().users[userIndex].name, 0, 0).getWidth()/2, ofGetHeight()/2 + emptyImage.getHeight()/2);
     ofPopStyle();
 }
 
 void SoundWheelState::swap() {
-    int newIndex = (int)ofRandom(users.size());
-    if(newIndex == userIndex) swap();
-    else userIndex = newIndex;
+    userIndex++;
+    userIndex %= getSharedData().users.size();
 }
 
 void SoundWheelState::fillPage() {
     ofPushStyle();
     ofSetRectMode(OF_RECTMODE_CORNER);
     ofSetColor(getSharedData().background);
-    float yMargin = (ofGetHeight() - emptyImage.getHeight())/2;
-    float xMargin = (ofGetWidth() - emptyImage.getWidth())/2;
+    float yMargin = (ofGetHeight() - getSharedData().images[getSharedData().users[userIndex].imageIndex].getHeight()/2)/2;
+    float xMargin = (ofGetWidth() - getSharedData().images[getSharedData().users[userIndex].imageIndex].getWidth()/2)/2;
     ofRect(0, 0, ofGetWidth(), yMargin);
     ofRect(0, 0, xMargin, ofGetHeight());
     ofRect(0, ofGetHeight() - yMargin - 1, ofGetWidth(), yMargin + 10);
@@ -97,5 +76,28 @@ void SoundWheelState::keyPressed(int key)
     if(key == 's')
     {
         changeState("splash"); //change state back to main page
+    }
+    switch (key) {
+        case '1':
+            changeState("soundWheel");
+            getSharedData().performanceOn = false;
+            break;
+        case '2':
+            changeState("mirror");
+            getSharedData().performanceOn = false;
+            break;
+        case '3':
+            changeState("space");
+            getSharedData().performanceOn = false;
+            break;
+        case '4':
+            changeState("flow");
+            getSharedData().performanceOn = false;
+            break;
+        case 'p':
+            getSharedData().performanceOn = !getSharedData().performanceOn;
+            break;
+        default:
+            break;
     }
 }

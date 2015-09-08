@@ -22,6 +22,7 @@ public:
     void update();
     void draw();
     void keyPressed(int key);
+    void stateEnter();
     void mousePressed(int x, int y, int button);
     string getName();
 private:

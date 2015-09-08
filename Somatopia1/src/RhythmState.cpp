@@ -12,35 +12,36 @@ using namespace ofxCv;
 using namespace cv;
 
 void RhythmState::setup() {
-    getSharedData().noise.loadSound("pongSound.ogg"); //load pong sound
-    ball.setCol(getSharedData().pallete[1]); //set ball color
+    dimFac = 0.5;
+    getSharedData().noise.loadSound("pongSound.ogg");
+    ball.setCol(getSharedData().pallete[1]);
+    ball.setFrame(getSharedData().camWidth*dimFac, getSharedData().camHeight*dimFac);
 }
 
 void RhythmState::update() {
-    ball.update(); //update ball locationa nd velocity
-    ball.checkEdges(); //check ball isn't contacting any edges
-    
-    getSharedData().cam.update(); //update camera
-    if(getSharedData().cam.isFrameNew()) { //check if the frame is new
-        getSharedData().colImg.setFromPixels(getSharedData().cam.getPixels(), 320, 240); //set col Image from pixels
-        getSharedData().colImg.mirror(false, true); //mirror image
-        getSharedData().grayImage = getSharedData().colImg; //set grey image equal to colImg (is will stay grey because of how we initialized it in testApp.cpp)
-        if(getSharedData().bLearnBackground) { //check if we need to learn the background
-            getSharedData().grayBg = getSharedData().grayImage; //set the background tot he greyscale image
-            getSharedData().bLearnBackground = false; //stop learning the background
+    ball.update();
+    ball.checkEdges();
+    getSharedData().frame = getSharedData().cam.grab();
+    if(!getSharedData().frame.empty()) {
+        cv::resize(getSharedData().frame, getSharedData().smallFrame, cv::Size(round(dimFac*getSharedData().frame.cols), round(dimFac*getSharedData().frame.rows)));
+        cvtColor(getSharedData().smallFrame, getSharedData().greyFrame, CV_BGR2GRAY);
+        if(getSharedData().bLearnBackground)
+        {
+            getSharedData().greyBackground = getSharedData().greyFrame.clone();
+            getSharedData().bLearnBackground = false;
         }
-        
-        getSharedData().grayDiff.absDiff(getSharedData().grayBg, getSharedData().grayImage); //take the difference between background and grey image
-        getSharedData().grayDiff.threshold(getSharedData().threshold); //threshold the difference
-        getSharedData().contourFinder.findContours(getSharedData().grayDiff); //find blocs int he thresholded subtraction image
+        absdiff(getSharedData().greyFrame, getSharedData().greyBackground, getSharedData().greyDiff);
+        getSharedData().contourFinder.setThreshold(getSharedData().threshold);
+        getSharedData().contourFinder.findContours(getSharedData().greyDiff);
+        cv::threshold(getSharedData().greyDiff, getSharedData().greyDiff, getSharedData().threshold, 255, CV_THRESH_BINARY);
     }
-
-    int n = getSharedData().contourFinder.size(); //number of blobs found
+    
+    int n = getSharedData().contourFinder.size();
     for(int i = 0; i < n; i++)
     {
-        ofPolyline convexHull; //use this data structure to find the convex Hulls
-        convexHull = ofxCv::toOf(getSharedData().contourFinder.getConvexHull(i)); //change the blobs into ofPolylines using ofxCv
-        ball.checkContour(convexHull); //check to see of the ball is touching any contours and repel it if so
+        ofPolyline convexHull;
+        convexHull = ofxCv::toOf(getSharedData().contourFinder.getConvexHull(i));
+        ball.checkContour(convexHull);
     }
 }
 
@@ -48,11 +49,14 @@ void RhythmState::draw()
 {
 //    ofDrawBitmapString("Rhythm is currently under development: press 's' to return the splash page",  0, 10);
     ofSetColor(255);
-    getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight()); //display the video
+//    getSharedData().frame.draw(0, 0, ofGetWidth(), ofGetHeight());
+    drawMat(getSharedData().frame, 0, 0, ofGetWidth(), ofGetHeight());
+//    getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight());
+//    getSharedData().video.draw();
     
-    ball.display(); //display the ball
+    ball.display();
     
-    getSharedData().drawDebug(); //draw the debug windows if turned on.
+    getSharedData().drawDebug();
 }
 
 string RhythmState::getName()
@@ -60,14 +64,14 @@ string RhythmState::getName()
     return "rhythm";
 }
 
-void RhythmState::mousePressed(int x, int y, int button)
-{
+void RhythmState::mousePressed(int x, int y, int button) {
+    changeState("splash");
     
 }
 
 void RhythmState::mouseMoved(int x, int y )
 {
-    mouseX = x; //set mouseX and Y
+    mouseX = x;
     mouseY = y;
 }
 
@@ -76,12 +80,11 @@ void RhythmState::keyPressed(int key)
 {
     if(key == 's')
     {
-        changeState("splash"); //change state to main page
+        changeState("splash");
     }
-    //handle global functions (see how the work in SharedData.cpp)
+    
     getSharedData().handleDebug(key);
-    getSharedData().handleBackground(key);
     getSharedData().handleThreshold(key);
-    getSharedData().handleUtils(key);
+    getSharedData().handleBackground(key);
 
 }

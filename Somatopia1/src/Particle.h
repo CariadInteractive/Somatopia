@@ -31,5 +31,5 @@ private:
     float maxVel;
     float rad;
     ofMesh mesh;
-    ofColor dispCol, slowCol, fastCol;
+    ofColor col, dispCol, slowCol, fastCol;
 };

@@ -33,48 +33,71 @@
 
 #include "ofxCv.h"
 #include "ofxOpenCv.h"
+#include "ofxCvPiCam.h"// <--- for Linux
+//#include "ThreadedObject.h"//
+//#include "ofxRPiCameraVideoGrabber.h"
 
-class SharedData 
+class SharedData
 {
 public:
     ofTrueTypeFont futura;
-    ofVideoGrabber cam;
+    ofTrueTypeFont nameFutura;
+//    ofVideoGrabber camVid; // <---- for mac
+    ofxCvPiCam cam; // <---- for Linux
+    cv::Mat frame, greyFrame, greyBackground, greyDiff, smallFrame;
+//    ofxRPiCameraVideoGrabber video;
+//    OMXCameraSettings omxCameraSettings;
+    ofImage colImg;
     
-    ofxCv::ContourFinder contourFinder; //contourFinder
-    /* ofxOpenCv objects for handling background subtraction (replace with cv::Mats to use only ofxCv */
-    ofxCvColorImage	colImg;
-    ofxCvGrayscaleImage grayImage;
-    ofxCvGrayscaleImage grayBg;
-    ofxCvGrayscaleImage grayDiff;
+    struct User {
+        int imageIndex, colIndex;
+        ofImage portrait;
+        std::string name;
+    };
     
-    ofSoundPlayer noise; //sound to be played
+    vector<User> users;
+    User tmpUser;
     
-    float threshold; //threshold for background subtraction
+    bool performanceOn;
     
-    bool bLearnBackground; //bool for learning background
-    bool bDebugOn; //bool for drawing debug
-    bool bVidOn; //bool for global video activation
-    bool bIsCursorHidden; //keep track of whether or not the cursor has been hidden
+    ofxCv::ContourFinder contourFinder;
+//    ofxCvColorImage	colorImg;
+//    ofxCvGrayscaleImage grayImage;
+//    ofxCvGrayscaleImage grayBg;
+//    ofxCvGrayscaleImage grayDiff;
     
-
+    ofSoundPlayer noise;
     
-    int numFlowParticles; //number of particles on flow app
+    float threshold;
     
+    int camWidth;
+    int camHeight;
+    
+    bool bLearnBackground;
+    bool bDebugOn;
+    bool bVidOn;
+    
+    int numFlowParticles;
     int wheelCount;
     
-    void drawDebug(); //draw debug function
-    /* functions to control global variables */
+    bool bIsCursorHidden;
+    
+//    ThreadedObject threadedObject;
+    
+    void drawDebug();
     void handleDebug(int key);
     void handleBackground(int key);
-    void handleThreshold(int key);
+    void handleThreshold(int key );
     void handleUtils(int key);
-    
+    void handlePerformance(int key);
+        
     int mapColor(std::string colorName);
     int mapShape(std::string shapeName);
 
-    ofColor pallete[10]; //color pallete in array
+    
+    ofColor pallete[10];
     ofImage images[7]; //array of images
     ofImage emptyImages[7]; //array of empty images
-    ofColor background; //background color (keeping track of it here
-    
+    ofColor background;
+
 };

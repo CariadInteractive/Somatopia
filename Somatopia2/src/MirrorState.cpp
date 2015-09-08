@@ -31,6 +31,10 @@ void MirrorState::setup() {
     image.set(0);
 }
 
+void MirrorState::stateEnter() {
+    getSharedData().wheelCount = 0;
+}
+
 void MirrorState::update() {
     star = getSharedData().wheelCount;
     if(getSharedData().wheelCount >= 10) getSharedData().wheelCount = 0;
@@ -132,7 +136,7 @@ void MirrorState::draw() {
             
             ofVec3f vec(0,0,0);
             mesh.addVertex(vec);
-            vec.x += ofGetHeight()/2;
+            vec.x += ofGetHeight();
             
             for(int i = 0; i < star; i++) {
                 mesh.addVertex(vec);

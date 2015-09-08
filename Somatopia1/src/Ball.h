@@ -19,22 +19,26 @@ public:
     void update();
     void checkEdges();
     void checkContour(ofPolyline contour);
+    void setFrame(int camWidth, int camHeight);
     Ball();
     
 private:
-    ofVec2f loc; //location of Ball
-    ofVec2f vel; //velocity of Ball
-    ofVec2f acc; //Acceleration of Ball
+    ofVec2f loc;
+    ofVec2f vel;
+    ofVec2f acc;
     
-    ofSoundPlayer sound; //sound that the ball plays
-    int rad; //radius of the ball
-    int mass; //mass of the ball (not actually used, could be used for some physics)
+    int frameWidth;
+    int frameHeight;
     
-    ofColor col; //color of the ball
+    ofSoundPlayer sound;
+    int rad;
+    int mass;
     
-    bool inside; //check if the ball is inside any polyLines
-    int soundTimer; //timer to keep sound from pinging too much
-    int MIN_TIME_BETWEEN_BEEPS; //min time between each sound being played
+    ofColor col;
+    
+    bool inside;
+    int soundTimer;
+    int MIN_TIME_BETWEEN_BEEPS;
 };
 
 

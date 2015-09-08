@@ -1,22 +1,32 @@
 #include "testApp.h"
 
+using namespace ofxCv;
+using namespace cv;
+
 //--------------------------------------------------------------
 void testApp::setup(){
     // setup shared data
-    //enable mouse a keyboard interaction (usually on by default)
+    
+    ofSetLogLevel(OF_LOG_VERBOSE);
+    ofSetLogLevel("ofThread", OF_LOG_ERROR);
+    
     stateMachine.enableKeyEvents();
     stateMachine.enableMouseEvents();
     
-//    cout << "Devices: " << endl;
-    stateMachine.getSharedData().cam.setDeviceID(stateMachine.getSharedData().cam.listDevices().size() - 1);
-//    stateMachine.getSharedData().cam.setDeviceID(1166760);
-
-//    stateMachine.getSharedData().cam.listDevices();
-    //Allocate space for our images
-    stateMachine.getSharedData().colImg.allocate(320,240);
-    stateMachine.getSharedData().grayImage.allocate(320,240);
-    stateMachine.getSharedData().grayBg.allocate(320,240);
-    stateMachine.getSharedData().grayDiff.allocate(320,240);
+    stateMachine.getSharedData().camWidth = 320;
+    stateMachine.getSharedData().camHeight = 240;
+    
+    stateMachine.getSharedData().wheelCount = 0;
+    
+    stateMachine.getSharedData().bIsCursorHidden = false;
+    
+    stateMachine.getSharedData().nameFutura.loadFont("Futura.ttc", 128);
+    
+    stateMachine.getSharedData().cam.setup(stateMachine.getSharedData().camWidth, stateMachine.getSharedData().camHeight, true);
+    
+    stateMachine.getSharedData().performanceOn = false;
+    
+//    stateMachine.getSharedData().frame = toCv(stateMachine.getSharedData().colImg);
     
     //input our color pallete for the project
     stateMachine.getSharedData().pallete[0] = ofColor(232, 135, 57); //orange
@@ -47,30 +57,40 @@ void testApp::setup(){
     stateMachine.getSharedData().emptyImages[5].loadImage("Triangle_rev.png");
     stateMachine.getSharedData().emptyImages[6].loadImage("Asterix_rev.png");
     
-    //save the 4th color as the background color for reference later
+    ofxJSONElement json;
+    
+    std::string file = "Users.json";
+    bool parsingSuccessful = json.open(file);
+    if(parsingSuccessful) {
+        ofLogNotice("SoundWheelState::setup") << json.getRawString(true);
+        for(int i = 0; i < json["Users"].size(); i++) {
+            ofImage portrait;
+            portrait.allocate(560, 373, OF_IMAGE_COLOR);
+            bool loaded = portrait.loadImage("portraits/"+json["Users"][i]["name"].asString()+".jpg");
+            if(!loaded) cout<<"unable to load portrait for "<< json["Users"][i]["name"].asString() << ", ensure your file has a .jpg extension and the name of the file matches the name in Users.json" << endl;
+            else cout<<"portrait for "<<json["Users"][i]["name"].asString()<<" loaded successfully"<<endl;
+            stateMachine.getSharedData().tmpUser;
+            stateMachine.getSharedData().tmpUser.imageIndex = stateMachine.getSharedData().mapShape(json["Users"][i]["shape"].asString());
+            stateMachine.getSharedData().tmpUser.portrait = portrait;
+            stateMachine.getSharedData().tmpUser.colIndex = stateMachine.getSharedData().mapColor(json["Users"][i]["color"].asString());
+            stateMachine.getSharedData().tmpUser.name = json["Users"][i]["name"].asString();
+            stateMachine.getSharedData().users.push_back(stateMachine.getSharedData().tmpUser);
+        }
+    }
+    
     stateMachine.getSharedData().background = stateMachine.getSharedData().pallete[3];
     
-    //turn off debug mode
     stateMachine.getSharedData().bDebugOn = false;
-    
-    //turn background learning on so the first frame the app recieves will be set as the background image
     stateMachine.getSharedData().bLearnBackground = true;
     
-    //set the threshold for blob tracking
     stateMachine.getSharedData().threshold = 20.0f;
-    
-    //load font futura
+        
     stateMachine.getSharedData().futura.loadFont("Futura.ttc", 32);
     
-    //initialize our webcam
-    stateMachine.getSharedData().cam.initGrabber(320, 240);
-    
-    //initialize our blob finder
     stateMachine.getSharedData().contourFinder.setMinAreaRadius(10);
-    stateMachine.getSharedData().contourFinder.setMaxAreaRadius(100);
+    stateMachine.getSharedData().contourFinder.setMaxAreaRadius(stateMachine.getSharedData().camWidth/2);
     stateMachine.getSharedData().contourFinder.setInvert(false);
     
-    //set the background to our background
     ofBackground(stateMachine.getSharedData().background);
     
     // initialise state machine
@@ -79,17 +99,22 @@ void testApp::setup(){
     stateMachine.addState<FlowState>();
     stateMachine.addState<CRState>();
     stateMachine.addState<SpaceState>();
-    stateMachine.addState<RhythmState>();
     stateMachine.addState<SoundWheelState>();
+//    stateMachine.addState<RhythmState>();
     stateMachine.addState<MirrorState>();
     
-    //set first state
     stateMachine.changeState("splash");
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
     
+}
+
+void testApp::exit() {
+//    if(stateMachine.getSharedData().threadedObject.isThreadRunning()) stateMachine.getSharedData().threadedObject.stop();
+    
+    cout<<"stopping"<<endl;
 }
 
 //--------------------------------------------------------------
@@ -119,8 +144,7 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    cout<<"Mouse Pressed in Test App"<<endl;
-    
+    cout<<"Mouse Pressed in testApp!"<<endl;
 }
 
 //--------------------------------------------------------------

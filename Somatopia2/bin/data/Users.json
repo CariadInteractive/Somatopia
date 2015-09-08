@@ -4,9 +4,10 @@
 	{ "name": "Chris", "color": "white", "shape": "circle"},
 	{ "name": "Sam", "color": "purple", "shape": "heart"},
 	{ "name": "Reece", "color": "green", "shape": "triangle"},
-	{ "name": "Guillame", "color": "grey", "shape": "cross"},
+	{ "name": "Guillaume", "color": "grey", "shape": "cross"},
 	{ "name": "Louis", "color": "blue", "shape": "heart"},
 	{ "name": "Frazer", "color": "purple", "shape": "heart"},
-	{ "name": "Kimberly", "color": "blue", "shape": "circle"}
+	{ "name": "Kim", "color": "blue", "shape": "circle"},
+	{ "name": "Jan", "color": "blue", "shape": "triangle"}
 
 ]}

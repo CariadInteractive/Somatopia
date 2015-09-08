@@ -1,0 +1,11 @@
+{"Users":[
+	{ "name": "Jo", "color": "red", "shape": "square" },
+	{ "name": "Natalie", "color": "pink", "shape": "heart"},
+	{ "name": "Chris", "color": "white", "shape": "circle"},
+	{ "name": "Sam", "color": "purple", "shape": "heart"},
+	{ "name": "Reese", "color": "green", "shape": "triangle"},
+	{ "name": "Guillame", "color": "grey", "shape": "cross"},
+	{ "name": "Louis", "color": "blue", "shape": "heart"},
+	{ "name": "Frazier", "color": "purple", "shape": "heart"},
+	{ "name": "Kimberly", "color": "blue", "shape": "circle"},
+]}

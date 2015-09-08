@@ -1,4 +1,6 @@
-ofxOpenCv
 ofxCv
+ofxRPiCameraVideoGrabber
+ofxCvPiCam
+ofxOpenCv
 ofxStateMachine
 ofxJSON

@@ -21,5 +21,5 @@ public:
     void keyPressed(int key);
     string getName();
 private:
-    StateButton vidToggle; //button toggle global video
+    StateButton vidToggle;
 };

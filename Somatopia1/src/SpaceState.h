@@ -21,6 +21,13 @@ public:
     string getName();
     
 private:
-    vector<Tile> tiles; //vector of tiles covering screen
-    ofVideoGrabber spaceCam;
+    vector<Tile> tiles;
+    ofxCv::FlowFarneback farneback;
+    float dimFac;
+    int alpha;
+    int timer;
+    int tick;
+    int userIndex;
+    cv::Mat dst;
+
 };

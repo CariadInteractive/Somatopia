@@ -7,99 +7,94 @@
 //
 
 #include "SpaceState.h"
-#define NUMROWS 10
-#define NUMCOLS 10
+#define NUMROWS 20
+#define NUMCOLS 20
 
 using namespace ofxCv;
 using namespace cv;
 
 void SpaceState::setup()
 {
-    spaceCam.setDeviceID(getSharedData().cam.listDevices().size() - 1);
-    spaceCam.initGrabber(320, 240);
+    dimFac = 0.15;
     ofSetRectMode(OF_RECTMODE_CORNER);
-    tiles = vector<Tile>(); //initialize a vector of tiles
-    int w = ofGetWidth() / NUMCOLS; //measure width of each tile
-    int h = ofGetHeight() / NUMROWS; //measure height of each tile
-    int k = 0; //set counter = 0
-    
-    /*iterate over rows and columns initializing tiles*/
+    tiles = vector<Tile>();
+    int w = ofGetWidth() / NUMCOLS;
+    int h = ofGetHeight() / NUMROWS;
+    int k = 0;
     for(int i = 0; i < NUMROWS; i++) {
         for(int j = 0; j < NUMCOLS; j++) {
-            tiles.push_back(Tile(j*w+w/2, i*h+h/2, w, h));//set tile locations
-            tiles[k].setCols(getSharedData().pallete[0], getSharedData().pallete[4]); //set tile colors (inside then outside)
+            tiles.push_back(Tile(j*w+w/2, i*h+h/2, w, h));
             k++;
         }
     }
+    
+    alpha = 255;
+    tick = 0;
+    userIndex = (int)ofRandom(getSharedData().users.size());
+    timer = ofGetElapsedTimeMillis();
 }
 
 void SpaceState::update()
 {
-    if(getSharedData().bVidOn) { //check if global video is on
-        if(!tiles[0].vidIsOn()) { //check if tiles know video is on
-            for(int i = 0; i < tiles.size(); i++) {
-                tiles[i].activateVid(); //tell each tile that the video is on
-            }
-        }
+    getSharedData().frame = getSharedData().cam.grab();
+    if(!getSharedData().frame.empty()) {
+        cv::flip(getSharedData().frame, dst, 1);
+        ofxCv::toOf(dst, getSharedData().colImg);
+        getSharedData().colImg.update();
+        cv::resize(dst, getSharedData().smallFrame, cv::Size(round(dimFac*getSharedData().frame.cols), round(dimFac*getSharedData().frame.rows)));
+        farneback.calcOpticalFlow(getSharedData().smallFrame);
     }
-    else { //if video is off
-        if(tiles[0].vidIsOn()) { //check if tiles think that video is on
-            for(int i = 0; i < tiles.size(); i++) {
-                tiles[i].deactivateVid(); //tell each tile that the video is off
-            }
-        }
-    }
-    spaceCam.update(); //update camera
+    ofColor col = getSharedData().pallete[(int)ofRandom(7)];
     
-    if(spaceCam.isFrameNew()) { //check if the frame is new
-        getSharedData().colImg.setFromPixels(spaceCam.getPixels(), 320, 240); //set colImg from pixels from video Grabber
-        getSharedData().colImg.mirror(false, true); //mirror image
-
-        getSharedData().grayImage = getSharedData().colImg; //set grey image equal to colImg (it will remain grey because we initialized it that way in testApp.cpp)
-        if(getSharedData().bLearnBackground) { //chekc if we need to learnt he background
-            getSharedData().grayBg = getSharedData().grayImage; //set the background image
-            getSharedData().bLearnBackground = false; //stop learning the background
-        }
-        
-        getSharedData().grayDiff.absDiff(getSharedData().grayBg, getSharedData().grayImage); // take the difference of the background and grey imahe
-        getSharedData().grayDiff.threshold(getSharedData().threshold); //threshold the difference
-        
-        getSharedData().contourFinder.findContours(getSharedData().grayDiff); //find blobs in the subtracted thresholded image
-        
-        int n = getSharedData().contourFinder.size(); //get number of blobs
-        for(int i = 0; i < n; i++) {
-            ofPolyline convexHull; //use this class to calculate intersections
-            convexHull = ofxCv::toOf(getSharedData().contourFinder.getConvexHull(i)); //convert the blobs into ofPlyLines using ofxCv
-            for(int j = 0; j < tiles.size(); j++) {
-                tiles[j].checkContour(convexHull); //check if each tile is inside a blob
+    float w = ofMap(tiles[0].fullWidth, 0, ofGetWidth(), 0, getSharedData().camWidth*dimFac);
+    float h = ofMap(tiles[0].h, 0, ofGetHeight(), 0, getSharedData().camHeight*dimFac);
+    float avg = farneback.getAverageFlow().length();
+    cout<<avg<<endl;
+    for(int i = 0; i < tiles.size(); i++) {
+        float x = ofMap(tiles[i].x, 0, ofGetWidth(), 0, getSharedData().camWidth*dimFac);
+        float y = ofMap(tiles[i].y, 0, ofGetHeight(), 0, getSharedData().camHeight*dimFac);
+        ofRectangle region = ofRectangle(x, y, w, h);
+        float flow = farneback.getAverageFlowInRegion(region).length();
+//        cout<<flow<<endl;
+        if(flow > avg) {
+            if(avg > 0.02) {
+                tiles[i].activate();
             }
         }
-        int closedCount = 0;
-        for(int i = 0; i < tiles.size(); i++)
-        {
-            tiles[i].update(); //flip the tiles
-            if(tiles[i].isClosed()) closedCount++;
+        else {
+            tiles[i].deactivate();
         }
-        if(closedCount == NUMROWS*NUMCOLS) {
-            int newCol = (int)ofRandom(8);
-            for(int i = 0; i < tiles.size(); i++) {
-                tiles[i].reset(getSharedData().pallete[newCol]);
-            }
-        }
+        tiles[i].update(col);
     }
 }
 
 void SpaceState::draw()
 {
     ofSetColor(255);
-    if(tiles[0].vidIsOn()) //check if the tiles this video is on
-    {
-        getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight()); // if they do then draw the camera stream to the frame
-    }
+    getSharedData().colImg.draw(0, 0, ofGetWidth(), ofGetHeight());
     for(int i = 0; i < tiles.size(); i++) {
-        tiles[i].display(); //draw the tiles
+        tiles[i].display();
     }
-    getSharedData().drawDebug(); //draw debug images if debug is turned on
+//    farneback.draw(0, 0, ofGetWidth(), ofGetHeight());
+    if(getSharedData().performanceOn) {
+        int timeLength = 20000;
+        int nextIndex = (userIndex + 1)%getSharedData().users.size();
+        ofSetColor(ofColor(255), alpha);
+        getSharedData().nameFutura.drawString(getSharedData().users[userIndex].name, ofGetWidth()/2 - getSharedData().nameFutura.getStringBoundingBox(getSharedData().users[userIndex].name, 0, 0).getWidth()/2, ofGetHeight()/4);
+        getSharedData().nameFutura.drawString(getSharedData().users[nextIndex].name, ofGetWidth()/2 - getSharedData().nameFutura.getStringBoundingBox(getSharedData().users[nextIndex].name, 0, 0).getWidth()/2, ofGetHeight()*3/4);
+        if(ofGetElapsedTimeMillis() - timer > timeLength/255) {
+            tick++;
+            alpha -= 255/(timeLength/255)*2;
+            timer = ofGetElapsedTimeMillis();
+            if(tick > timeLength/255) {
+                timer = ofGetElapsedTimeMillis();
+                tick = 0;
+                alpha = 255;
+                userIndex += 2;
+                userIndex%=getSharedData().users.size();
+            }
+        }
+    }
 }
 
 string SpaceState::getName()
@@ -109,21 +104,45 @@ string SpaceState::getName()
 
 void SpaceState::mousePressed(int x, int y, int button)
 {
-    changeState("splash"); //change to main page
+    changeState("splash");
 }
 
 void SpaceState::keyPressed(int key)
 {
     if(key == 's') {
-        changeState("splash"); //change to main page
+        changeState("splash");
     }
     if(key == 'v') {
-        getSharedData().bVidOn = !getSharedData().bVidOn; //toggle video on and off
+        getSharedData().bVidOn = !getSharedData().bVidOn;
     }
-    /*functions to handle global states (see SharedData.cpp for more info)*/
     getSharedData().handleDebug(key);
     getSharedData().handleBackground(key);
     getSharedData().handleThreshold(key);
-    getSharedData().handleUtils(key);
-
+    switch (key) {
+        case '1':
+            changeState("soundWheel");
+            getSharedData().performanceOn = false;
+            break;
+        case '2':
+            changeState("mirror");
+            getSharedData().performanceOn = false;
+            break;
+        case '3':
+            changeState("space");
+            getSharedData().performanceOn = false;
+            break;
+        case '4':
+            changeState("flow");
+            getSharedData().performanceOn = false;
+            break;
+        case 'p':
+            getSharedData().performanceOn = !getSharedData().performanceOn;
+            alpha = 255;
+            tick = 0;
+            userIndex = (int)ofRandom(getSharedData().users.size());
+            timer = ofGetElapsedTimeMillis();
+            break;
+        default:
+            break;
+    }
 }

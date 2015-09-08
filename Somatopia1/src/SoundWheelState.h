@@ -13,16 +13,11 @@
 #include "SharedData.h"
 #include "ofMain.h"
 
-class SoundWheelState : public itg::ofxState<SharedData>, public ofBaseSoundInput
+class SoundWheelState : public itg::ofxState<SharedData>
 {
 public:
-    struct User {
-        ofImage emptyImage, fullImage;
-        ofImage portrait;
-        ofColor col;
-        std::string name;
-    };
     void setup();
+    void stateEnter();
     void update();
     void draw();
     void swap();
@@ -34,5 +29,4 @@ private:
     ofColor col;
     ofImage fullImage;
     ofImage emptyImage;
-    vector<User> users;
 };

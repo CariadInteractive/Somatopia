@@ -17,11 +17,19 @@ public:
     void setup();
     void update();
     void draw();
+//    void stateEnter();
+//    void stateExit();
     void mousePressed(int x, int y, int button);
     void keyPressed(int key);
     string getName();
 private:
-    ofxCv::FlowFarneback farneback; //ofxCv flow finder (farneback style!)
-    vector<Particle> particles; //vector of particles to be drawn on screen
-    ofVideoGrabber flowCam;
+    ofxCv::FlowFarneback farneback;
+    float dimFac;
+    vector<Particle> particles;
+    bool vidOn;
+    int alpha;
+    int timer;
+    int tick;
+    int userIndex;
+    cv::Mat dst;
 };

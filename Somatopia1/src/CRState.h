@@ -20,21 +20,18 @@ public:
     void keyPressed(int key);
     void audioIn(float *samples, int length, int numChannels);
     void tryToSwap();
-    void fillPage();
     void swap();
-//    void stateEnter();
     string getName();
 private:
     ofSoundStream soundStream;
-    float sensitivity; //sound sensitivity
-    float volume; //input volume
-    float displayVolume; //square of input volume
-    int audioFramesSinceLastSwapped; //audio counter
-    int MIN_FRAMES_BETWEEN_SWAPS; //audio timer threshold
-    int imageIndex; //index holding the image
-    int colorIndex; //index holding the color
-    bool mustSwap; //bool to tell update to change images and colors
-    bool vidOn; //bool to check if vid is on (deprecated I believe)
-    ofImage images[7]; //array of images
-    ofImage emptyImages[7]; //array of empty images
+    float sensitivity;
+    float volume;
+    float displayVolume;
+    int audioFramesSinceLastSwapped;
+    int MIN_FRAMES_BETWEEN_SWAPS;
+    int imageIndex;
+    int colorIndex;
+    bool mustSwap;
+    bool vidOn;
+    ofImage images[7];
 };

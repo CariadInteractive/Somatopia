@@ -17,21 +17,21 @@ public:
     void setup();
     void update();
     void draw();
-    void keyPressed(int key);
     void mousePressed(int x, int y, int button);
+    void keyPressed(int key);
     string getName();
     
 private:
-    int offSet; //offset value for button spacing
-    int buttonWidth; //width of each state Button (not options)
-    int buttonHeight; //height of the State Button (not options)
+    int offSet;
+    int buttonWidth;
+    int buttonHeight;
     
-    /*state buttons*/
+    
     StateButton flow;
     StateButton cr;
 //    StateButton rhythm;
+    StateButton mirror;
     StateButton soundWheel;
     StateButton space;
     StateButton options;
-    StateButton mirror;
 };
