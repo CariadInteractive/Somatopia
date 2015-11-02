@@ -11,11 +11,13 @@ using namespace ofxCv;
 using namespace cv;
 
 void OptionsState::setup() {
-    vidToggle = StateButton(50, 50, 50, 50, "null");
-    vidToggle.setCol(ofColor(getSharedData().pallete[0]));
+    vidToggle = StateButton(50, 50, 50, 50, "CheckMark.png");
+    vidToggle.setImage("CheckMark.png");
+    //vidToggle.setCol(ofColor(getSharedData().pallete[0]));
     
-    snapShot = StateButton(50, 110, 50, 50, "null");
-    snapShot.setCol(ofColor(getSharedData().pallete[1]));
+    snapShot = StateButton(50, 110, 50, 50, "CheckMark.png");
+    snapShot.setImage("CheckMark.png");
+    //snapShot.setCol(ofColor(getSharedData().pallete[1]));
 }
 
 void OptionsState::update() {
