@@ -12,7 +12,7 @@ using namespace cv;
 
 void OptionsState::setup() {
     vidToggle = StateButton(50, 50, 50, 50, "null");
-    vidToggle.setCol(ofColor(getSharedData().pallete[1]));
+    vidToggle.setCol(ofColor(getSharedData().pallete[0]));
     
     snapShot = StateButton(50, 110, 50, 50, "null");
     snapShot.setCol(ofColor(getSharedData().pallete[1]));
