@@ -1,6 +1,5 @@
-ofxCv
-ofxRPiCameraVideoGrabber
-ofxCvPiCam
 ofxOpenCv
-ofxStateMachine
+ofxCv
 ofxJSON
+ofxStateMachine
+ofxCvPiCam

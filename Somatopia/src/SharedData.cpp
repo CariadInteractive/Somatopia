@@ -59,7 +59,7 @@ void SharedData::setupCamera(int width, int height) {
     cam.setup(width, height, true);
 #elif __APPLE__
     cam.setVerbose(true);
-    cam.setDeviceID(1);
+    cam.setDeviceID(0);
     cam.initGrabber(width, height);
 #endif
 }
