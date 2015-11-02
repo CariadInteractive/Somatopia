@@ -21,6 +21,6 @@ public:
     void keyPressed(int key);
     string getName();
 private:
-    StateButton vidToggle; //button toggle global video
-    StateButton snapShot; //button to take a picture
+    StateButton vidToggle;
+    StateButton snapShot;
 };
