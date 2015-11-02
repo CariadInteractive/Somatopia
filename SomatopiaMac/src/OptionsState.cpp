@@ -15,6 +15,9 @@ void OptionsState::setup() {
     //set up vidToggle button
     vidToggle = StateButton(50, 50, 50, 50, "null");
     vidToggle.setCol(ofColor(getSharedData().pallete[0]));
+    //set up snap Button
+    snapShot = StateButton(50, 110, 50, 50, "null");
+    snapShot.setCol(ofColor(getSharedData().pallete[1]));
 }
 
 void OptionsState::update() {
@@ -36,6 +39,9 @@ void OptionsState::draw() {
     vidToggle.display(); //draw the vidToggle button
     if(getSharedData().bVidOn) getSharedData().futura.drawString("Video On", 100 + getSharedData().futura.getStringBoundingBox(" ", 0, 0).getWidth(), 100); //draw name of vidToggle button when vid On
     else getSharedData().futura.drawString("Video Off", 100 + getSharedData().futura.getStringBoundingBox(" ", 0, 0).getWidth(), 100); //draw name of vidToggle button when vid OFf
+    
+    snapShot.display();
+    getSharedData().futura.drawString("Save Your Portrait!", 100 + getSharedData().futura.getStringBoundingBox(" ", 0, 0).getWidth(), 160);
     
     /*draw current color frame on left*/
     getSharedData().colImg.draw(0, ofGetHeight()/2, ofGetWidth()/2, ofGetHeight()/2);
@@ -68,6 +74,11 @@ void OptionsState::mousePressed(int x, int y, int button) {
     }
     if(vidToggle.isInside(x, y)) {
         getSharedData().bVidOn = !getSharedData().bVidOn; //toggle video
+    }
+    if(snapShot.isInside(x, y)) {
+        ofImage imageToSave;
+        imageToSave.setFromPixels(getSharedData().cam.getPixels(), getSharedData().cam.width, getSharedData().cam.height, OF_IMAGE_COLOR);
+        imageToSave.saveImage("portraits/image" + ofGetTimestampString() + ".jpg");
     }
 }
 
