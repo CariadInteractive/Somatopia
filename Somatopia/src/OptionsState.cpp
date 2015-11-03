@@ -50,6 +50,13 @@ void OptionsState::draw() {
     
     snapShot.display();
     getSharedData().futura.drawString("Save Your Portrait!", 100 + getSharedData().futura.getStringBoundingBox(" ", 0, 0).getWidth(), 160);
+    ofPopStyle();
+    if(ofGetMousePressed() && snapShot.isInside(ofGetMouseX(), ofGetMouseY())) {
+        ofPushStyle();
+        ofSetColor(255, 0, 0);
+        ofRect(snapShot.getX(), snapShot.getY(), snapShot.getW(), snapShot.getH() );
+        ofPopStyle();
+    }
     
     drawMat(getSharedData().frame, 0, ofGetHeight()/2, ofGetWidth()/2, ofGetHeight()/2);
     drawMat(getSharedData().greyBackground, ofGetWidth()/2, ofGetHeight()/2, ofGetWidth()/2, ofGetHeight()/2);
