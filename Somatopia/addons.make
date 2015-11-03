@@ -2,3 +2,4 @@ ofxOpenCv
 ofxCv
 ofxJSON
 ofxStateMachine
+ofxCvPiCam
