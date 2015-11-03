@@ -11,8 +11,11 @@
 void CRState::setup()
 {
     sensitivity = 0.7;
-    soundStream.setup(0, 1, 44100, 512, 1);
     soundStream.setInput(this);
+    soundStream.setup(0, 1, 44100, 512, 1);
+#ifdef __arm__
+    soundStream.setDeviceID(1);
+#endif
     //soundStream.stop();
     imageIndex = 0;
     colorIndex = 0;
@@ -100,7 +103,6 @@ void CRState::audioIn(float *samples, int length, int numChannels) {
                 audioFramesSinceLastSwapped = 0;
             }
         }
-        
         audioFramesSinceLastSwapped++;
     }
 }
