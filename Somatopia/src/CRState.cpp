@@ -12,10 +12,11 @@ void CRState::setup()
 {
     sensitivity = 0.7;
     soundStream.setInput(this);
-    soundStream.setup(0, 1, 44100, 512, 1);
 #ifdef __arm__
-    soundStream.setDeviceID(1);
+    soundStream.setDeviceID(2);
+    soundStream.listDevices();
 #endif
+    soundStream.setup(0, 1, 44100, 512, 1);
     //soundStream.stop();
     imageIndex = 0;
     colorIndex = 0;
