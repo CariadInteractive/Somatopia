@@ -52,6 +52,9 @@ string CRState::getName()
 
 void CRState::mousePressed(int x, int y, int button)
 {
+    if(button == OF_MOUSE_BUTTON_RIGHT) {
+        changeState("splash");
+    }
 //    unsigned char *pixels=images[imageIndex].getPixels();
 //    int numPixels = images[imageIndex].getHeight() + images[imageIndex].getWidth();
 //    for(int index = 0; index < numPixels*4; index += 4)
@@ -63,7 +66,7 @@ void CRState::mousePressed(int x, int y, int button)
 //        printf(">>>>%i >>>%i >>>%i >>>%i >>>%i\n", index, red,green,blue,alpha);
 //    }
 //    cout<<numPixels<<endl;
-    changeState("splash");
+//    changeState("splash");
 }
 
 void CRState::keyPressed(int key)

@@ -202,6 +202,9 @@ void MirrorState::draw() {
 }
 
 void MirrorState::mousePressed(int x, int y, int button) {
+    if(button == OF_MOUSE_BUTTON_RIGHT) {
+        changeState("splash");
+    }
     //    int newStar = 2*(int)ofMap(x, 0, ofGetWidth(), 1, 10);
     //    if(newStar!=star) {
     //        timeOfLastStar = ofGetElapsedTimef();

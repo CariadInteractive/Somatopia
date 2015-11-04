@@ -95,6 +95,8 @@ void testApp::setup(){
     
     ofBackground(stateMachine.getSharedData().background);
     
+    stateMachine.getSharedData().micSensitivity.set(0.7);
+    
     // initialise state machine
     stateMachine.addState<SplashState>();
     stateMachine.addState<OptionsState>();

@@ -107,9 +107,10 @@ string SpaceState::getName()
     return "space";
 }
 
-void SpaceState::mousePressed(int x, int y, int button)
-{
-    changeState("splash");
+void SpaceState::mousePressed(int x, int y, int button) {
+    if(button == OF_MOUSE_BUTTON_RIGHT) {
+        changeState("splash");
+    }
 }
 
 void SpaceState::keyPressed(int key)

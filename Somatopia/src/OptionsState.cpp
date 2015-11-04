@@ -64,15 +64,22 @@ void OptionsState::draw() {
     getSharedData().futura.drawString("Options", ofGetWidth()/2 - getSharedData().futura.getStringBoundingBox("Options", 0, 0).getWidth()/2, getSharedData().futura.getStringBoundingBox("Options", 0, 0).getHeight());
     getSharedData().futura.drawString("Camera Input", ofGetWidth()/4 - getSharedData().futura.getStringBoundingBox("Camera Input", 0, 0).getWidth()/2, ofGetHeight()/2/* - getSharedData().futura.getStringBoundingBox("Camera Input", 0, 0).getHeight()/2*/);
     getSharedData().futura.drawString("Background Image", ofGetWidth()*3/4 - getSharedData().futura.getStringBoundingBox("Background Image", 0, 0).getWidth()/2, ofGetHeight()/2/* - getSharedData().futura.getStringBoundingBox("Camera Input", 0, 0).getHeight()/2*/);
+    getSharedData().futura.drawString("Mic Sensitivity: " + ofToString(getSharedData().micSensitivity), ofGetWidth()/2 + 50, 100);
+    getSharedData().futura.drawString("Change with left and right arrow keys", ofGetWidth()/2 + 50, 150);
 }
 
 void OptionsState::keyPressed(int key) {
-    if(key == 's') {
-        changeState("splash");
+    if(key == OF_KEY_LEFT) {
+        getSharedData().micSensitivity -= 0.05;
+        if(getSharedData().micSensitivity < 0) getSharedData().micSensitivity = 0;
+    } else if(key == OF_KEY_RIGHT) {
+        getSharedData().micSensitivity += 0.05;
+        if(getSharedData().micSensitivity > 1) getSharedData().micSensitivity = 1;
+    } else {
+        getSharedData().handleDebug(key);
+        getSharedData().handleBackground(key);
+        getSharedData().handleThreshold(key);
     }
-    getSharedData().handleDebug(key);
-    getSharedData().handleBackground(key);
-    getSharedData().handleThreshold(key);
 }
 
 void OptionsState::mousePressed(int x, int y, int button) {
@@ -93,7 +100,9 @@ void OptionsState::mousePressed(int x, int y, int button) {
         #endif
         imageToSave.saveImage("portraits/image" + ofGetTimestampString() + ".jpg");
     }
-
+    if(button == OF_MOUSE_BUTTON_RIGHT) {
+        changeState("splash");
+    }
 }
 
 string OptionsState::getName() {

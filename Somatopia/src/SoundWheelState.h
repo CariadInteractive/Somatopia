@@ -21,6 +21,7 @@ public:
     void draw();
     void swap();
     void keyPressed(int key);
+    void mousePressed(int x, int y, int button);
     void fillPage();
     string getName();
 private:

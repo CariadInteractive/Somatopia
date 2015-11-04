@@ -84,6 +84,8 @@ public:
     int camWidth;
     int camHeight;
     
+    ofParameter<float> micSensitivity;
+    
     bool bLearnBackground;
     bool bDebugOn;
     bool bVidOn;

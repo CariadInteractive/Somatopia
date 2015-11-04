@@ -101,3 +101,9 @@ void SoundWheelState::keyPressed(int key)
             break;
     }
 }
+
+void SoundWheelState::mousePressed(int x, int y, int button) {
+    if(button == OF_MOUSE_BUTTON_RIGHT) {
+        changeState("splash");
+    }
+}
