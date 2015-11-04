@@ -46,6 +46,9 @@ void SplashState::draw()
     soundWheel.display();
     ofSetColor(255);
     getSharedData().futura.drawString("Sound Wheel", soundWheel.getX() + soundWheel.getW()/2 -getSharedData().futura.getStringBoundingBox("Sound Wheel", 0, 0).getWidth()/2, soundWheel.getY() + soundWheel.getH()/2);
+   // rhythm.display();
+   // ofSetColor(255);
+   //  getSharedData().futura.drawString("Rhythm", rhythm.getX() + rhythm.getW()/2 -getSharedData().futura.getStringBoundingBox("Rhythm", 0, 0).getWidth()/2, rhythm.getY() + rhythm.getH()/2);
     cr.display();
     ofSetColor(255);
     getSharedData().futura.drawString("Call & Response", cr.getX() + cr.getW()/2 -getSharedData().futura.getStringBoundingBox("Call & Response", 0, 0).getWidth()/2, cr.getY() + cr.getH()/2);
