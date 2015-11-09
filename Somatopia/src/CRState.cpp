@@ -13,7 +13,7 @@ void CRState::setup()
     sensitivity = 0.7;
     soundStream.setInput(this);
 #ifdef __arm__
-    soundStream.setDeviceID(2);
+    soundStream.setDeviceID(getSharedData().soundDeviceId);
     soundStream.listDevices();
 #endif
     soundStream.setup(0, 1, 44100, 512, 1);

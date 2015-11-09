@@ -24,6 +24,7 @@ public:
     string getName();
 private:
     ofSoundStream soundStream;
+    int DeviceId;
     float sensitivity;
     float volume;
     float displayVolume;
