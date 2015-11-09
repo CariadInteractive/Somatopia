@@ -80,6 +80,12 @@ void testApp::setup(){
         }
     }
     
+    std::string settingsFile = "Settings.json";
+    parsingSuccessful = json.open(settingsFile);
+    if(parsingSuccessful) {
+        stateMachine.getSharedData().soundDeviceId = json["soundDeviceId"].asInt();
+    }
+    
     stateMachine.getSharedData().background = stateMachine.getSharedData().pallete[3];
     
     stateMachine.getSharedData().bDebugOn = false;

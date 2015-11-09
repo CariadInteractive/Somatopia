@@ -105,6 +105,8 @@ public:
     void handlePerformance(int key);
     
     void setupCamera(int width, int height);
+    
+    int soundDeviceId;
         
     int mapColor(std::string colorName);
     int mapShape(std::string shapeName);

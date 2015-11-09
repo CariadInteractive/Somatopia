@@ -66,6 +66,7 @@ void OptionsState::draw() {
     getSharedData().futura.drawString("Background Image", ofGetWidth()*3/4 - getSharedData().futura.getStringBoundingBox("Background Image", 0, 0).getWidth()/2, ofGetHeight()/2/* - getSharedData().futura.getStringBoundingBox("Camera Input", 0, 0).getHeight()/2*/);
     getSharedData().futura.drawString("Mic Sensitivity: " + ofToString(getSharedData().micSensitivity), ofGetWidth()/2 + 50, 100);
     getSharedData().futura.drawString("Change with left and right arrow keys", ofGetWidth()/2 + 50, 150);
+    getSharedData().futura.drawString("Sound Input Device: " + ofToString(getSharedData().soundDeviceId), ofGetWidth()*3/4 - getSharedData().futura.getStringBoundingBox("Sound Input Device", 0, 0).getWidth()/2, 200);
 }
 
 void OptionsState::keyPressed(int key) {
@@ -75,7 +76,38 @@ void OptionsState::keyPressed(int key) {
     } else if(key == OF_KEY_RIGHT) {
         getSharedData().micSensitivity += 0.05;
         if(getSharedData().micSensitivity > 1) getSharedData().micSensitivity = 1;
-    } else {
+    } else if(key == '0') {
+        getSharedData().soundDeviceId = 0;
+        ofxJSONElement json;
+        json.open("Settings.json");
+        json["soundDeviceeviceId"] = getSharedData().soundDeviceId;
+        json.save("Settings.json");
+    } else if(key == '1') {
+        getSharedData().soundDeviceId = 1;
+        ofxJSONElement json;
+        json.open("Settings.json");
+        json["soundDeviceeviceId"] = getSharedData().soundDeviceId;
+        json.save("Settings.json");
+    } else if(key == '2') {
+        getSharedData().soundDeviceId = 2;
+        ofxJSONElement json;
+        json.open("Settings.json");
+        json["soundDeviceeviceId"] = getSharedData().soundDeviceId;
+        json.save("Settings.json");
+    } else if(key == '3') {
+        getSharedData().soundDeviceId = 3;
+        ofxJSONElement json;
+        json.open("Settings.json");
+        json["soundDeviceeviceId"] = getSharedData().soundDeviceId;
+        json.save("Settings.json");
+    } else if(key == '4') {
+        getSharedData().soundDeviceId = 4;
+        ofxJSONElement json;
+        json.open("Settings.json");
+        json["soundDeviceeviceId"] = getSharedData().soundDeviceId;
+        json.save("Settings.json");
+    }
+    else {
         getSharedData().handleDebug(key);
         getSharedData().handleBackground(key);
         getSharedData().handleThreshold(key);
